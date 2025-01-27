@@ -1,0 +1,171 @@
+package controladores.gestionmodulos.aulas;
+
+import DAO.AulaDAO;
+import com.example.inventario_hib.App;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import modelo.Aula;
+
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+
+public class CrearAulaController {
+    @FXML
+    private TextField txtDescripcion;
+
+    @FXML
+    private Spinner<Integer> spinnerNumeracion1;
+    @FXML
+    private Spinner<Integer> spinnerNumeracion2;
+    @FXML
+    private Spinner<Integer> spinnerNumeracion3;
+    @FXML
+    private Spinner<Integer> spinnerIp1;
+    @FXML
+    private Spinner<Integer> spinnerIp2;
+    @FXML
+    private Spinner<Integer> spinnerIp3;
+    @FXML
+    private Spinner<Integer> spinnerIp4;
+
+    @FXML
+    private Button botonLimpiar;
+
+    @FXML
+    public void initialize() {
+        spinnerIp1.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 255, 0));
+        spinnerIp2.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 255, 0));
+        spinnerIp3.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 255, 0));
+        spinnerIp4.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 255, 0));
+
+        spinnerNumeracion1.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10, 0));
+        spinnerNumeracion2.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10, 0));
+        spinnerNumeracion3.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 25, 0));
+
+        botonLimpiar.setOnAction(event ->
+                limpiar(event)
+        );
+    }
+
+    public void abrirAccesibilidad(ActionEvent actionEvent) {
+        try {
+            App.setRoot("com/example/inventario_hib/opcionesMenu/accesibilidad", "Accesibilidad.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void abrirAyuda(ActionEvent actionEvent) {
+        try {
+            String rutaAyuda = "C:/Users/tecen/Documents/HelpNDoc/Output/chm/AyudaApp.chm";
+
+            File archivoAyuda = new File(rutaAyuda);
+
+            if (archivoAyuda.exists()) {
+                Desktop.getDesktop().open(archivoAyuda);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Archivo de ayuda no encontrado");
+                alert.setContentText("No se pudo encontrar el archivo de ayuda en la ruta especificada:\n" + rutaAyuda);
+                alert.showAndWait();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error al abrir la ayuda");
+            alert.setContentText("Ocurrió un error al intentar abrir el archivo de ayuda. Por favor, inténtelo de nuevo.");
+            alert.showAndWait();
+        }
+    }
+
+    public void volver(ActionEvent actionEvent) {
+        try {
+            App.setRoot("/com/example/inventario_hib/gestionmodulos/aulas/aulas", "Aulas");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    private boolean comprobarCampos() {
+        if (comprobarDescripcion() && comprobarIp() && comprobarNumeracion()) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean comprobarDescripcion() {
+        if (!txtDescripcion.getText().isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean comprobarIp() {
+        if (spinnerIp1.getValue() != null && spinnerIp2.getValue() != null && spinnerIp3.getValue() != null && spinnerIp4.getValue() != null) {
+            String ip = spinnerIp1.getValue() + "." + spinnerIp2.getValue() + "." + spinnerIp3.getValue() + "." + spinnerIp4.getValue();
+            if (ip.matches("^(?:\\d{1,3}\\.){3}\\d{1,3}$")) {
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
+    private boolean comprobarNumeracion() {
+        if (spinnerNumeracion1.getValue() != null && spinnerNumeracion2.getValue() != null && spinnerNumeracion3.getValue() != null) {
+            String numeracion = spinnerNumeracion1.getValue() + "." + spinnerNumeracion2.getValue() + "." + spinnerNumeracion3.getValue();
+            if (numeracion.matches("^\\d{1,2}\\.\\d{1,2}\\.\\d{1,2}$")) {
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
+    public void limpiar(ActionEvent actionEvent) {
+        txtDescripcion.clear();
+
+        spinnerIp1.getValueFactory().setValue(0);
+        spinnerIp2.getValueFactory().setValue(0);
+        spinnerIp3.getValueFactory().setValue(0);
+        spinnerIp4.getValueFactory().setValue(0);
+
+        spinnerNumeracion1.getValueFactory().setValue(0);
+        spinnerNumeracion2.getValueFactory().setValue(0);
+        spinnerNumeracion3.getValueFactory().setValue(0);
+    }
+
+    public void crear(ActionEvent actionEvent) {
+        if (comprobarCampos()) {
+            AulaDAO aulaDAO = new AulaDAO();
+            String descripcion = txtDescripcion.getText();
+            String ip = spinnerIp1.getValue() + "." + spinnerIp2.getValue() + "." + spinnerIp3.getValue() + "." + spinnerIp4.getValue();
+            String numeracion = spinnerNumeracion1.getValue() + "." + spinnerNumeracion2.getValue() + "." + spinnerNumeracion3.getValue();
+            Aula aula = new Aula(numeracion, descripcion, ip);
+            if (aulaDAO.create(aula)) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Aula creada");
+                alert.setHeaderText("Aula creada correctamente.");
+                alert.setContentText("Descripción: " + txtDescripcion.getText() +
+                        "\nDirección IP: " + spinnerIp1.getValue() + "." + spinnerIp2.getValue() + "." + spinnerIp3.getValue() + "." + spinnerIp4.getValue() +
+                        "\nNumeración: " + spinnerNumeracion1.getValue() + "." + spinnerNumeracion2.getValue() + "." + spinnerNumeracion3.getValue());
+                alert.showAndWait();
+                limpiar(null);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error al crear el Aula");
+                alert.setHeaderText("Error al crear el Aula.");
+                alert.setContentText("No se ha podido crear el aula. Por favor, inténtelo de nuevo.");
+                alert.showAndWait();
+            }
+        }
+    }
+}
