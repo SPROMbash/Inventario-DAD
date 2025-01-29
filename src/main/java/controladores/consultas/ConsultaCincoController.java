@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import modelo.AbrirAccesibilidad;
 import modelo.AbrirAyuda;
+import modelo.AbrirConfiguracion;
 import modelo.Producto;
 
 import java.awt.*;
@@ -23,22 +24,22 @@ public class ConsultaCincoController {
     private static final ProductoDAO productoDAO = new ProductoDAO();
 
     @FXML
-    private TableView<Object[]> tablaConsulta;
+    private TableView<Object[]> tablaDeNumeroDeProductos;
     @FXML
-    private TableColumn<Object[], String> colCategoria;
+    private TableColumn<Object[], String> columnaCategorias;
     @FXML
-    private TableColumn<Object[], Long> colNumero;
+    private TableColumn<Object[], Long> columnaNumeroProductos;
 
     @FXML
     public void initialize() {
-        colCategoria.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue()[0]));
-        colNumero.setCellValueFactory(cellData -> new SimpleLongProperty((Long) cellData.getValue()[1]).asObject());
+        columnaCategorias.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue()[0]));
+        columnaNumeroProductos.setCellValueFactory(cellData -> new SimpleLongProperty((Long) cellData.getValue()[1]).asObject());
         cargarProductos();
     }
 
     private void cargarProductos() {
         List<Object[]> productos = productoDAO.getNumeroProductoPorCategoria();
-        tablaConsulta.getItems().setAll(productos);
+        tablaDeNumeroDeProductos.getItems().setAll(productos);
     }
 
     public void abrirAccesibilidad(ActionEvent actionEvent) {
@@ -47,6 +48,18 @@ public class ConsultaCincoController {
 
     public void abrirAyuda(ActionEvent actionEvent) {
         AbrirAyuda.abrir();
+    }
+
+    public void mostrarMensajeNoDisponible(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Función no disponible");
+        alert.setHeaderText(null);
+        alert.setContentText("Esta función estará disponible en versiones posteriores.");
+        alert.showAndWait();
+    }
+
+    public void abrirConfiguracion(){
+        AbrirConfiguracion.abrir();
     }
 
     public void volver(ActionEvent actionEvent) {

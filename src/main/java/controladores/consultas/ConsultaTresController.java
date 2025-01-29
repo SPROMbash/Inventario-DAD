@@ -27,54 +27,46 @@ public class ConsultaTresController {
     private Producto productoSeleccionado;
 
     @FXML
-    private ComboBox<Long> cbIdAula;
+    private ComboBox<Long> comboBoxIdProducto;
     @FXML
-    private ComboBox<Long> cbIdProducto;
-
+    private ComboBox<Long> comboBoxIdAula;
     @FXML
-    private TableView<Marcaje> tablaMarcajes;
+    private TableView<Marcaje> tablaDeMarcajes;
     @FXML
-    private TableColumn<Marcaje, Long> colIdMarcaje;
+    private TableColumn<Marcaje, Long> columnaIdMarcaje;
     @FXML
-    private TableColumn<Marcaje, Long> colIdAula;
+    private TableColumn<Marcaje, Long> columnaIdAula;
     @FXML
-    private TableColumn<Marcaje, Long> colIdProducto;
+    private TableColumn<Marcaje, Long> columnaIdProducto;
     @FXML
-    private TableColumn<Marcaje, Date> colFecha;
+    private TableColumn<Marcaje, Date> columnaFecha;
     @FXML
-    private TableColumn<Marcaje, Boolean> colTipo;
-
-    @FXML
-    private Button buttonLimpiar;
+    private TableColumn<Marcaje, Boolean> columnaTipo;
 
     @FXML
     public void initialize() {
-        colIdMarcaje.setCellValueFactory(new PropertyValueFactory<>("idMarcaje"));
-        colIdAula.setCellValueFactory(new PropertyValueFactory<>("idAula"));
-        colIdProducto.setCellValueFactory(new PropertyValueFactory<>("idProducto"));
-        colFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
-        colTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
+        columnaIdMarcaje.setCellValueFactory(new PropertyValueFactory<>("idMarcaje"));
+        columnaIdAula.setCellValueFactory(new PropertyValueFactory<>("idAula"));
+        columnaIdProducto.setCellValueFactory(new PropertyValueFactory<>("idProducto"));
+        columnaFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+        columnaTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
 
-        cbIdAula.getItems().setAll(obtenerIdAulas());
-        cbIdProducto.getItems().setAll(obtenerIdProductos());
+        comboBoxIdAula.getItems().setAll(obtenerIdAulas());
+        comboBoxIdProducto.getItems().setAll(obtenerIdProductos());
 
-        cbIdAula.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (cbIdAula.getValue() != null) {
-                aulaSeleccionada = aulaDAO.obtenerPorId(cbIdAula.getValue());
+        comboBoxIdAula.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (comboBoxIdAula.getValue() != null) {
+                aulaSeleccionada = aulaDAO.obtenerPorId(comboBoxIdAula.getValue());
             }
             cargarDatos();
         });
 
-        cbIdProducto.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (cbIdProducto.getValue() != null) {
-                productoSeleccionado = productoDAO.obtenerPorId(cbIdProducto.getValue());
+        comboBoxIdProducto.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (comboBoxIdProducto.getValue() != null) {
+                productoSeleccionado = productoDAO.obtenerPorId(comboBoxIdProducto.getValue());
             }
             cargarDatos();
         });
-
-        buttonLimpiar.setOnAction(event ->
-                limpiar()
-        );
     }
 
     private List<Long> obtenerIdAulas() {
@@ -111,16 +103,29 @@ public class ConsultaTresController {
         }
     }
 
+    public void mostrarMensajeNoDisponible(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Función no disponible");
+        alert.setHeaderText(null);
+        alert.setContentText("Esta función estará disponible en versiones posteriores.");
+        alert.showAndWait();
+    }
+
+    public void abrirConfiguracion(){
+        AbrirConfiguracion.abrir();
+    }
+
+    @FXML
     private void limpiar() {
-        cbIdProducto.setValue(null);
-        cbIdAula.setValue(null);
-        tablaMarcajes.getItems().clear();
+        comboBoxIdProducto.setValue(null);
+        comboBoxIdAula.setValue(null);
+        tablaDeMarcajes.getItems().clear();
     }
 
     private void cargarDatos() {
         if (aulaSeleccionada != null && productoSeleccionado != null) {
             List<Marcaje> marcajes = marcajeDAO.obtenerMarcajesAulaYProducto(aulaSeleccionada, productoSeleccionado);
-            tablaMarcajes.getItems().setAll(marcajes);
+            tablaDeMarcajes.getItems().setAll(marcajes);
         }
     }
 }
