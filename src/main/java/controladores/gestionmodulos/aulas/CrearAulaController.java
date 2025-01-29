@@ -143,7 +143,7 @@ public class CrearAulaController {
         spinnerNumeracion3.getValueFactory().setValue(0);
     }
 
-    public void crear(ActionEvent actionEvent) {
+    public void crearAula(ActionEvent actionEvent) {
         if (comprobarCampos()) {
             AulaDAO aulaDAO = new AulaDAO();
             String descripcion = txtDescripcion.getText();

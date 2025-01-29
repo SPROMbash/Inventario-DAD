@@ -5,10 +5,13 @@ import com.example.inventario_hib.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import modelo.Marcaje;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
@@ -19,23 +22,21 @@ public class MarcajesController {
     private Marcaje marcajeSeleccionado;
 
     @FXML
-    private DatePicker dateInicio;
+    private DatePicker FechaInicio;
     @FXML
-    private DatePicker dateFinal;
-
-
+    private DatePicker FechaFinal;
     @FXML
-    private TableView<Marcaje> tablaMarcajes;
+    private TableView<Marcaje> tablaDeMarcajes;
     @FXML
-    private TableColumn<Marcaje, Long> colIdMarcaje;
+    private TableColumn<Marcaje, Long> columnaIdMarcaje;
     @FXML
-    private TableColumn<Marcaje, Long> colIdAula;
+    private TableColumn<Marcaje, Long> columnaIdAula;
     @FXML
-    private TableColumn<Marcaje, Long> colIdProducto;
+    private TableColumn<Marcaje, Long> columnaIdProducto;
     @FXML
-    private TableColumn<Marcaje, Date> colFecha;
+    private TableColumn<Marcaje, Date> columnaFecha;
     @FXML
-    private TableColumn<Marcaje, Boolean> colTipo;
+    private TableColumn<Marcaje, Boolean> columnaTipo;
 
     @FXML
     private Button botonLimpiar;
@@ -43,22 +44,22 @@ public class MarcajesController {
 
     @FXML
     public void initialize() {
-        colIdMarcaje.setCellValueFactory(new PropertyValueFactory<>("idMarcaje"));
-        colIdAula.setCellValueFactory(new PropertyValueFactory<>("idAula"));
-        colIdProducto.setCellValueFactory(new PropertyValueFactory<>("idProducto"));
-        colFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
-        colTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
+        columnaIdMarcaje.setCellValueFactory(new PropertyValueFactory<>("idMarcaje"));
+        columnaIdAula.setCellValueFactory(new PropertyValueFactory<>("idAula"));
+        columnaIdProducto.setCellValueFactory(new PropertyValueFactory<>("idProducto"));
+        columnaFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+        columnaTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
         cargarMarcajes();
 
-        dateInicio.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (dateInicio.getValue() != null && dateFinal.getValue() != null) {
+        FechaInicio.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (FechaInicio.getValue() != null && FechaFinal.getValue() != null) {
                 if (comprobarInicioYFin()) {
                     filtrarEntreFechas();
                 }
             }
         });
 
-        dateFinal.valueProperty().addListener((observable, oldValue, newValue) -> {
+        FechaFinal.valueProperty().addListener((observable, oldValue, newValue) -> {
             filtrarEntreFechas();
         });
 
@@ -66,37 +67,78 @@ public class MarcajesController {
                 limpiar()
         );
 
-        tablaMarcajes.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        tablaDeMarcajes.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             marcajeSeleccionado = newValue;
         });
     }
 
     private void filtrarEntreFechas() {
         if (comprobarFechas() && comprobarInicioYFin()) {
-            LocalDate inicio = dateInicio.getValue();
-            LocalDate fin = dateFinal.getValue();
+            LocalDate inicio = FechaInicio.getValue();
+            LocalDate fin = FechaFinal.getValue();
             List<Marcaje> marcajes = marcajeDAO.obtenerEntreFechas(inicio, fin);
-            tablaMarcajes.getItems().setAll(marcajes);
+            tablaDeMarcajes.getItems().setAll(marcajes);
         }
     }
 
     private void cargarMarcajes() {
         List<Marcaje> marcajes = marcajeDAO.getTodos();
-        tablaMarcajes.getItems().setAll(marcajes);
+        tablaDeMarcajes.getItems().setAll(marcajes);
     }
 
     public void abrirAccesibilidad(ActionEvent actionEvent) {
         try {
-            App.setRoot("accesibilidad", "Accesibilidad");
-        } catch (IOException e) {
+            App.setRoot("/com/example/inventario_hib/opcionesMenu/accesibilidad", "Accesibilidad");
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void abrirConfiguracion(ActionEvent actionEvent) {
+        try {
+            App.setRoot("/com/example/inventario_hib/opcionesMenu/configuracion", "Configuración");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void abrirAyuda(ActionEvent actionEvent) {
+        try {
+            String rutaAyuda = "C:/Users/tecen/Documents/HelpNDoc/Output/chm/AyudaApp.chm";
+
+            File archivoAyuda = new File(rutaAyuda);
+
+            if (archivoAyuda.exists()) {
+                Desktop.getDesktop().open(archivoAyuda);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Archivo de ayuda no encontrado");
+                alert.setContentText("No se pudo encontrar el archivo de ayuda en la ruta especificada:\n" + rutaAyuda);
+                alert.showAndWait();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error al abrir la ayuda");
+            alert.setContentText("Ocurrió un error al intentar abrir el archivo de ayuda. Por favor, inténtelo de nuevo.");
+            alert.showAndWait();
+        }
+    }
+
+    public void mostrarMensajeNoDisponible(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Función no disponible");
+        alert.setHeaderText(null);
+        alert.setContentText("Esta función estará disponible en versiones posteriores.");
+        alert.showAndWait();
     }
 
 
     public void volver(ActionEvent actionEvent) {
         try {
-            App.setRoot("com/example/inventario_hib/gestionmodulos/gestionModulos", "Gestión de los distintos módulos");
+            App.setRoot("/com/example/inventario_hib/gestionmodulos/gestionModulos", "Gestión de los distintos módulos");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -104,7 +146,7 @@ public class MarcajesController {
 
     public void crearMarcaje(MouseEvent mouseEvent) {
         try {
-            App.setRoot("gestionmodulos/marcajes/crearMarcaje", "Crear Marcaje");
+            App.setRoot("/com/example/inventario_hib/gestionmodulos/marcajes/crearMarcaje", "Crear Marcaje");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -114,7 +156,7 @@ public class MarcajesController {
         try {
             if (marcajeSeleccionado != null) {
                 App.setUserData(marcajeSeleccionado);
-                App.setRoot("gestionmodulos/marcajes/modificarMarcaje", "Modificar Marcaje");
+                App.setRoot("/com/example/inventario_hib/gestionmodulos/marcajes/modificarMarcaje", "Modificar Marcaje");
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -165,14 +207,15 @@ public class MarcajesController {
         }
     }
 
+    @FXML
     private void limpiar() {
-        dateInicio.setValue(null);
-        dateFinal.setValue(null);
+        FechaInicio.setValue(null);
+        FechaFinal.setValue(null);
         cargarMarcajes();
     }
 
     private boolean comprobarFechas() {
-        if (dateInicio.getValue() == null || dateFinal.getValue() == null) {
+        if (FechaInicio.getValue() == null || FechaFinal.getValue() == null) {
             return false;
         }
         return true;
@@ -182,14 +225,14 @@ public class MarcajesController {
         if (!comprobarFechas()) {
             return false;
         }
-        if (dateInicio.getValue().isAfter(dateFinal.getValue())) {
+        if (FechaInicio.getValue().isAfter(FechaFinal.getValue())) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Error en el rango de fechas");
             alert.setContentText("La fecha de inicio no puede ser posterior a la fecha final. Por favor, corrige el rango de fechas.");
             alert.showAndWait();
-            dateInicio.setValue(null);
-            dateFinal.setValue(null);
+            FechaInicio.setValue(null);
+            FechaFinal.setValue(null);
             return false;
         }
         return true;

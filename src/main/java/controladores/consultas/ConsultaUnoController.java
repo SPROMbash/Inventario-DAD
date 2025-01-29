@@ -6,10 +6,13 @@ import com.example.inventario_hib.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
 import modelo.Marcaje;
 import modelo.Producto;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -107,16 +110,26 @@ public class ConsultaUnoController {
 
     public void abrirAyuda(ActionEvent actionEvent) {
         try {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Ayuda");
-            alert.setHeaderText("Ayuda - Consulta 1");
-            alert.setContentText("En esta ventana puedes consultar los marcajes de un solo producto en un rango de dos fechas." +
-                    "\n\nPara ello, selecciona un producto de la lista desplegable y elige dos fechas." +
-                    "\nPuedes pulsar el botón de 'Limpiar' si deseas vacías los campos." +
-                    "\nPor último, si lo deseas, puedes pulsar el botón de 'Volver' para volver a la página inicial.");
-            alert.showAndWait();
-        } catch (Exception e) {
+            String rutaAyuda = "C:/Users/tecen/Documents/HelpNDoc/Output/chm/AyudaApp.chm";
+
+            File archivoAyuda = new File(rutaAyuda);
+
+            if (archivoAyuda.exists()) {
+                Desktop.getDesktop().open(archivoAyuda);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Archivo de ayuda no encontrado");
+                alert.setContentText("No se pudo encontrar el archivo de ayuda en la ruta especificada:\n" + rutaAyuda);
+                alert.showAndWait();
+            }
+        } catch (IOException e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error al abrir la ayuda");
+            alert.setContentText("Ocurrió un error al intentar abrir el archivo de ayuda. Por favor, inténtelo de nuevo.");
+            alert.showAndWait();
         }
     }
 

@@ -88,7 +88,7 @@ public class ModificarProductoController {
         txtRFID.setText(productoSeleccionado.getKeyRFID());
     }
 
-    public void modificar(ActionEvent actionEvent) {
+    public void modificarProducto(ActionEvent actionEvent) {
         try {
             if (!comprobarCampos()) {
                 mostrarAlerta(Alert.AlertType.ERROR, "Campos vacíos", "Faltan campos obligatorios", "Por favor, rellena todos los campos antes de continuar.");

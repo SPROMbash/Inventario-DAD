@@ -71,7 +71,7 @@ public class CrearProductoController {
         }
     }
 
-    public void crear(ActionEvent actionEvent) {
+    public void crearProducto(ActionEvent actionEvent) {
         if (!comprobarCampos()) {
             mostrarAlerta(Alert.AlertType.WARNING, "Error", "Campos obligatorios",
                     "Todos los campos son obligatorios. Por favor, rellena todos los campos.");

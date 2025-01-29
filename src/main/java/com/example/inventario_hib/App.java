@@ -14,7 +14,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("dashboard"), 950, 600);
-        stage.setTitle("Sistema de gestión de productos");
+        stage.setTitle("Programa de gestión de inventario");
         stage.setScene(scene);
         stage.setResizable(false);
         scene.getStylesheets().add(getClass().getResource("/styles/tabla.css").toExternalForm());

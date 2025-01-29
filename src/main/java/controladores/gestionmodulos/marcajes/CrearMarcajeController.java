@@ -24,41 +24,23 @@ public class CrearMarcajeController {
     private final ProductoDAO productoDAO = new ProductoDAO();
     private final MarcajeDAO marcajeDAO = new MarcajeDAO();
     @FXML
-    private ComboBox<Long> cbIdAulas;
+    private ComboBox<Long> comboBoxIdAulas;
     @FXML
-    private ComboBox<Long> cbIdProductos;
+    private ComboBox<Long> comboBoxIdProductos;
     @FXML
-    private RadioButton rbEntrada;
+    private RadioButton radioButtonEntrada;
     @FXML
-    private RadioButton rbSalida;
+    private RadioButton radioButtonSalida;
 
     @FXML
     public void initialize() {
-        cbIdAulas.getItems().setAll(obtenerIdAulas());
-        cbIdProductos.getItems().setAll(obtenerIdProductos());
-    }
-
-    private List<Long> obtenerIdAulas() {
-        List<Aula> aulas = aulaDAO.getTodos();
-        List<Long> idAulas = new ArrayList<>();
-        for (Aula aula : aulas) {
-            idAulas.add(aula.getIdAula());
-        }
-        return idAulas;
-    }
-
-    private List<Long> obtenerIdProductos() {
-        List<Producto> productos = productoDAO.getTodos();
-        List<Long> idProductos = new ArrayList<>();
-        for (Producto producto : productos) {
-            idProductos.add(producto.getIdProducto());
-        }
-        return idProductos;
+        comboBoxIdAulas.getItems().setAll(obtenerIdAulas());
+        comboBoxIdProductos.getItems().setAll(obtenerIdProductos());
     }
 
     public void abrirAccesibilidad(ActionEvent actionEvent) {
         try {
-            App.setRoot("/com/example/inventario_hib/opcionesMenu/accesibilidad", "Accesibilidad.");
+            App.setRoot("/com/example/inventario_hib/opcionesMenu/accesibilidad", "Accesibilidad");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -97,19 +79,37 @@ public class CrearMarcajeController {
         }
     }
 
-    public void crear(ActionEvent actionEvent) {
+    private List<Long> obtenerIdAulas() {
+        List<Aula> aulas = aulaDAO.getTodos();
+        List<Long> idAulas = new ArrayList<>();
+        for (Aula aula : aulas) {
+            idAulas.add(aula.getIdAula());
+        }
+        return idAulas;
+    }
+
+    private List<Long> obtenerIdProductos() {
+        List<Producto> productos = productoDAO.getTodos();
+        List<Long> idProductos = new ArrayList<>();
+        for (Producto producto : productos) {
+            idProductos.add(producto.getIdProducto());
+        }
+        return idProductos;
+    }
+
+    public void crearMarcaje(ActionEvent actionEvent) {
         if (comprobarCampos()) {
             Marcaje marcaje = new Marcaje();
-            marcaje.setIdAula(aulaDAO.obtenerPorId(cbIdAulas.getValue()));
-            marcaje.setIdProducto(productoDAO.obtenerPorId(cbIdProductos.getValue()));
-            marcaje.setTipo(rbEntrada.isSelected());
+            marcaje.setIdProducto(productoDAO.obtenerPorId(comboBoxIdProductos.getValue()));
+            marcaje.setIdAula(aulaDAO.obtenerPorId(comboBoxIdAulas.getValue()));
+            marcaje.setTipo(radioButtonEntrada.isSelected());
             if (marcajeDAO.create(marcaje)) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Marcaje Creado");
                 alert.setHeaderText("Marcaje creado correctamente.");
-                alert.setContentText("ID del Aula: " + cbIdAulas.getValue() +
-                        "\nID del Producto: " + cbIdProductos.getValue() +
-                        "\nTipo: " + (rbEntrada.isSelected() ? "Entrada" : "Salida"));
+                alert.setContentText("ID del Aula: " + comboBoxIdAulas.getValue() +
+                        "\nID del Producto: " + comboBoxIdProductos.getValue() +
+                        "\nTipo: " + (radioButtonEntrada.isSelected() ? "Entrada" : "Salida"));
                 alert.showAndWait();
                 limpiar();
             } else {
@@ -121,15 +121,16 @@ public class CrearMarcajeController {
         }
     }
 
+    @FXML
     private void limpiar() {
-        cbIdAulas.getSelectionModel().clearSelection();
-        cbIdProductos.getSelectionModel().clearSelection();
-        rbEntrada.setSelected(false);
-        rbSalida.setSelected(false);
+        comboBoxIdProductos.getSelectionModel().clearSelection();
+        comboBoxIdAulas.getSelectionModel().clearSelection();
+        radioButtonEntrada.setSelected(false);
+        radioButtonSalida.setSelected(false);
     }
 
     private boolean comprobarCampos() {
-        if (cbIdAulas.getSelectionModel().isEmpty() || cbIdProductos.getSelectionModel().isEmpty() || (!rbEntrada.isSelected() && !rbSalida.isSelected())) {
+        if (comboBoxIdAulas.getSelectionModel().isEmpty() || comboBoxIdProductos.getSelectionModel().isEmpty() || (!radioButtonEntrada.isSelected() && !radioButtonSalida.isSelected())) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error - Crear Marcaje");
             alert.setHeaderText("Error al crear el marcaje.");

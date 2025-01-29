@@ -72,7 +72,7 @@
             <Font name="Calibri Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="botonCrear" layoutX="523.0" layoutY="560.0" mnemonicParsing="false" onAction="#crear" prefHeight="26.0" prefWidth="136.0" text="CREAR PRODUCTO">
+      <Button layoutX="523.0" layoutY="560.0" mnemonicParsing="false" onAction="#crearProducto" prefHeight="26.0" prefWidth="136.0" text="CREAR PRODUCTO">
          <font>
             <Font name="Calibri Bold" size="12.0" />
          </font>

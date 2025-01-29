@@ -29,7 +29,7 @@ public class GestionModulosController {
 
     public void abrirMarcajes(MouseEvent mouseEvent) {
         try {
-            App.setRoot("/com/example/inventario_hib/gestionmodulos/marcajes/marcajes", "Marcajes.");
+            App.setRoot("/com/example/inventario_hib/gestionmodulos/marcajes/marcajes", "Marcajes");
         } catch (Exception e) {
             e.printStackTrace();
         }

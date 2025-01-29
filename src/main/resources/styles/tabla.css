@@ -1,6 +1,6 @@
 /* Fondo de los encabezados de columna */
 .table-view .column-header-background {
-    -fx-background-color: #FF6F61; /* Coral */
+    -fx-background-color: #87CEEB; /* Azul celeste */
 }
 
 /* Encabezados de columna individuales */

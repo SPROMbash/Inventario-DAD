@@ -118,7 +118,7 @@ public class ModificarAulaController {
         spinnerNumeracion3.getValueFactory().setValue(Integer.parseInt(numeracion[2]));
     }
 
-    public void modificar(ActionEvent actionEvent) {
+    public void modificarAula(ActionEvent actionEvent) {
         if (comprobarCampos() && comprobarCamposModificados()) {
             aulaSeleccionada.setDescripcion(txtDescripcion.getText());
             aulaSeleccionada.setDireccionIp(getDireccionIp());

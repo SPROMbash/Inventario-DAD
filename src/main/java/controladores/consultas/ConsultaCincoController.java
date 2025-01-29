@@ -12,6 +12,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import modelo.Producto;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -47,14 +49,26 @@ public class ConsultaCincoController {
 
     public void abrirAyuda(ActionEvent actionEvent) {
         try {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Ayuda");
-            alert.setHeaderText("Ayuda - Consulta 4");
-            alert.setContentText("En esta ventana puedes consultar los productos que no pertenecen a ninguna categoría." +
-                    "\nSi lo deseas, puedes pulsar el botón de 'Volver' para volver a la página inicial.");
-            alert.showAndWait();
-        } catch (Exception e) {
+            String rutaAyuda = "C:/Users/tecen/Documents/HelpNDoc/Output/chm/AyudaApp.chm";
+
+            File archivoAyuda = new File(rutaAyuda);
+
+            if (archivoAyuda.exists()) {
+                Desktop.getDesktop().open(archivoAyuda);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Archivo de ayuda no encontrado");
+                alert.setContentText("No se pudo encontrar el archivo de ayuda en la ruta especificada:\n" + rutaAyuda);
+                alert.showAndWait();
+            }
+        } catch (IOException e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error al abrir la ayuda");
+            alert.setContentText("Ocurrió un error al intentar abrir el archivo de ayuda. Por favor, inténtelo de nuevo.");
+            alert.showAndWait();
         }
     }
 

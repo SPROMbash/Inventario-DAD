@@ -123,7 +123,7 @@ public class ModificarMarcajeController {
         }
     }
 
-    public void modificar(ActionEvent actionEvent) {
+    public void modificarMarcaje(ActionEvent actionEvent) {
         if (comprobarCampos() && comprobarCamposModificados()) {
             Marcaje marcaje = new Marcaje();
             marcaje.setIdAula(new Aula(cbIdAulas.getValue()));

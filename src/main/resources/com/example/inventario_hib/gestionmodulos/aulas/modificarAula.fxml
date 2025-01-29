@@ -65,7 +65,7 @@
             <Font name="Calibri Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="botonModificar" layoutX="528.0" layoutY="552.0" mnemonicParsing="false" onAction="#modificar" prefHeight="26.0" prefWidth="136.0" text="MODIFICAR AULA">
+      <Button layoutX="528.0" layoutY="552.0" mnemonicParsing="false" onAction="#modificarAula" prefHeight="26.0" prefWidth="136.0" text="MODIFICAR AULA">
          <font>
             <Font name="Calibri Bold" size="12.0" />
          </font>
