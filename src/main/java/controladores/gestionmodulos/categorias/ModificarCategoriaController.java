@@ -5,15 +5,11 @@ import com.example.inventario_hib.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import modelo.AbrirAccesibilidad;
 import modelo.AbrirAyuda;
 import modelo.Categoria;
-
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import modelo.MostrarAlerta;
 
 
 public class ModificarCategoriaController {
@@ -21,26 +17,25 @@ public class ModificarCategoriaController {
     private Categoria categoriaSeleccionada;
 
     @FXML
-    private TextField txtNombre;
+    private TextField txtNombreCategoria;
     @FXML
     private TextField txtDescripcion;
     @FXML
-    private RadioButton rbActivada;
+    private ToggleButton toggleButtonActivo;
     @FXML
-    private RadioButton rbDesactivada;
-
-    @FXML
-    private Button botonLimpiar;
+    private ToggleButton toggleButtonDesactivado;
 
     @FXML
     public void initialize() {
+
         categoriaSeleccionada = (Categoria) App.getUserData();
+
+        ToggleGroup EstadoCategoriaGroup = new ToggleGroup();
+        toggleButtonActivo.setToggleGroup(EstadoCategoriaGroup);
+        toggleButtonDesactivado.setToggleGroup(EstadoCategoriaGroup);
 
         limpiar();
 
-        botonLimpiar.setOnAction(event ->
-                limpiar()
-        );
     }
 
     public void abrirAccesibilidad(ActionEvent actionEvent) {
@@ -59,56 +54,52 @@ public class ModificarCategoriaController {
         }
     }
 
-    public void modificar(ActionEvent actionEvent) {
+    public void modificarCategoria(ActionEvent actionEvent) {
         if (comprobarCampos() && comprobarCamposModificados()) {
-            categoriaSeleccionada.setNombre(txtNombre.getText());
+            categoriaSeleccionada.setNombre(txtNombreCategoria.getText());
             categoriaSeleccionada.setDescripcion(txtDescripcion.getText());
-            categoriaSeleccionada.setEstado(rbActivada.isSelected());
+            categoriaSeleccionada.setEstado(toggleButtonActivo.isSelected());
             if (categoriaDAO.update(categoriaSeleccionada)) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Información");
-                alert.setHeaderText("Categoría modificada");
-                alert.setContentText("Nombre: " + categoriaSeleccionada.getNombre() +
-                        "\nDescripción: " + categoriaSeleccionada.getDescripcion() +
-                        "\nEstado: " + (categoriaSeleccionada.isEstado() ? "Activado" : "Desactivado"));
-                alert.showAndWait();
+                MostrarAlerta.AlertaExitosa("Modificación exitosa", "Categoría modificada", "Se ha modificado la categoría correctamente");
                 limpiar();
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Error al modificar la categoría");
-                alert.setContentText("Ha ocurrido un error al modificar la categoría. Por favor, inténtelo de nuevo.");
-                alert.showAndWait();
+                MostrarAlerta.AlertaError("Error", "Error al intentar modificar la categoría", "No se ha podido modifcar la categoría");
             }
         }
     }
 
+    @FXML
     private void limpiar() {
-        txtNombre.setText(categoriaSeleccionada.getNombre());
+        txtNombreCategoria.setText(categoriaSeleccionada.getNombre());
         txtDescripcion.setText(categoriaSeleccionada.getDescripcion());
-        rbActivada.setSelected(categoriaSeleccionada.isEstado());
-        rbDesactivada.setSelected(!categoriaSeleccionada.isEstado());
+        toggleButtonActivo.setSelected(categoriaSeleccionada.isEstado());
+        toggleButtonDesactivado.setSelected(!categoriaSeleccionada.isEstado());
     }
 
     private boolean comprobarCampos() {
-        if (txtNombre.getText().isEmpty() && txtDescripcion.getText().isEmpty() && (!rbActivada.isSelected() && !rbDesactivada.isSelected())) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error al modificar la categoría");
-            alert.setContentText("Debes rellenar, al menos, un campo.");
-            alert.showAndWait();
+        String nombreCategoria = txtNombreCategoria.getText();
+        String descripcion = txtDescripcion.getText();
+
+        if (nombreCategoria.isEmpty() || descripcion.isEmpty()) {
+            MostrarAlerta.showAlert("Faltan campos por rellenar.");
             return false;
         }
+
+        if (descripcion.matches("\\d+")) {
+            MostrarAlerta.showAlert("No se permite introducir solo números en la descripción.");
+            return false;
+        }
+
         return true;
     }
 
     private boolean comprobarCamposModificados() {
-        if (txtNombre.getText().equals(categoriaSeleccionada.getNombre()) && txtDescripcion.getText().equals(categoriaSeleccionada.getDescripcion()) && ((rbActivada.isSelected() && categoriaSeleccionada.isEstado()) || (rbDesactivada.isSelected() && !categoriaSeleccionada.isEstado()))) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error al modificar la categoría");
-            alert.setContentText("No has modificado ningún campo.");
-            alert.showAndWait();
+        if (txtNombreCategoria.getText().equals(categoriaSeleccionada.getNombre()) &&
+                txtDescripcion.getText().equals(categoriaSeleccionada.getDescripcion()) &&
+                ((toggleButtonActivo.isSelected() && categoriaSeleccionada.isEstado()) ||
+                        (toggleButtonDesactivado.isSelected() && !categoriaSeleccionada.isEstado()))) {
+
+            MostrarAlerta.showAlert("No has modificado ningún campo.");
             return false;
         }
         return true;

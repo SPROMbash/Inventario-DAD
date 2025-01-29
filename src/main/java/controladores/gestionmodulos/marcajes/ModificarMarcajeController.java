@@ -34,11 +34,8 @@ public class ModificarMarcajeController {
     private ToggleButton toggleButtonEntrada;
     @FXML
     private ToggleButton toggleButtonSalida;
-
     @FXML
     private DatePicker FechaMarcaje;
-    @FXML
-    private Button botonLimpiar;
 
     @FXML
     public void initialize() {
@@ -51,9 +48,6 @@ public class ModificarMarcajeController {
         toggleButtonEntrada.setToggleGroup(tipoMarcajeGroup);
         toggleButtonSalida.setToggleGroup(tipoMarcajeGroup);
 
-        botonLimpiar.setOnAction(event ->
-                limpiar()
-        );
     }
 
     private void rellenarCampos() {
@@ -105,20 +99,9 @@ public class ModificarMarcajeController {
             marcaje.setFecha(java.sql.Date.valueOf(FechaMarcaje.getValue()));
             marcaje.setTipo(toggleButtonEntrada.isSelected());
             if (marcajeDAO.update(marcaje)) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Información");
-                alert.setHeaderText("Marcaje modificado");
-                alert.setContentText("ID del Aula: " + marcaje.getIdAula().getIdAula() + "\n" +
-                        "ID del Producto: " + marcaje.getIdProducto().getIdProducto() + "\n" +
-                        "Fecha: " + marcaje.getFecha() + "\n" +
-                        "Tipo: " + (marcaje.isTipo() ? "Entrada" : "Salida"));
-                alert.showAndWait();
+                MostrarAlerta.AlertaExitosa("Modificación exitosa", "Marcaje modificado", "Se ha modificado el marcaje correctamente");
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Error - Marcaje no modificado");
-                alert.setContentText("Ha ocurrido un error al modificar el marcaje. Por favor, inténtelo de nuevo.");
-                alert.showAndWait();
+                MostrarAlerta.AlertaError("Error", "Error al intentar modificar el marcaje", "No se ha podido modificar el marcaje");
             }
         }
     }

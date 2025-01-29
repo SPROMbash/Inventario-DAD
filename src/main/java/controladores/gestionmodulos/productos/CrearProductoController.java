@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import modelo.AbrirAccesibilidad;
 import modelo.AbrirAyuda;
+import modelo.MostrarAlerta;
 import modelo.Producto;
 
 import java.awt.*;
@@ -24,13 +25,8 @@ public class CrearProductoController {
     private TextField txtRFID;
 
     @FXML
-    private Button botonLimpiar;
-
-    @FXML
     public void initialize() {
-        botonLimpiar.setOnAction(event ->
-            limpiar(event)
-        );
+
     }
     public void abrirAccesibilidad(ActionEvent actionEvent) {
         AbrirAccesibilidad.abrir();
@@ -50,20 +46,20 @@ public class CrearProductoController {
 
     public void crearProducto(ActionEvent actionEvent) {
         if (!comprobarCampos()) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Error", "Campos obligatorios",
+            MostrarAlerta.AlertaError("Error", "Campos obligatorios",
                     "Todos los campos son obligatorios. Por favor, rellena todos los campos.");
             return;
         }
 
         if (!comprobarEAN13(txtEAN13.getText())) {
             if (!txtEAN13.getText().matches("[0-9]+")) {
-                mostrarAlerta(Alert.AlertType.ERROR, "Error en EAN13", "Formato incorrecto",
+                MostrarAlerta.AlertaError("Error en EAN13", "Formato incorrecto",
                         "El código EAN13 solo puede contener números.");
             } else if (txtEAN13.getText().length() != 13) {
-                mostrarAlerta(Alert.AlertType.ERROR, "Error en EAN13", "Longitud incorrecta",
+                MostrarAlerta.AlertaError("Error en EAN13", "Longitud incorrecta",
                         "El código EAN13 debe contener exactamente 13 dígitos. Actualmente tiene " + txtEAN13.getText().length() + " dígitos.");
             } else {
-                mostrarAlerta(Alert.AlertType.ERROR, "Error en EAN13", "Formato no válido",
+                MostrarAlerta.AlertaError("Error en EAN13", "Formato no válido",
                         "El código EAN13 no es válido.");
             }
             return;
@@ -71,16 +67,16 @@ public class CrearProductoController {
 
         if (!comprobarRFID(txtRFID.getText())) {
             if (!txtRFID.getText().startsWith("RFID")) {
-                mostrarAlerta(Alert.AlertType.ERROR, "Error en RFID", "Formato incorrecto",
+                MostrarAlerta.AlertaError("Error en RFID", "Formato incorrecto",
                         "El código RFID debe comenzar con 'RFID'.");
             } else if (!txtRFID.getText().matches("RFID[0-9]+")) {
-                mostrarAlerta(Alert.AlertType.ERROR, "Error en RFID", "Formato incorrecto",
+                MostrarAlerta.AlertaError("Error en RFID", "Formato incorrecto",
                         "El código RFID debe contener solo números después de 'RFID'.");
             } else if (txtRFID.getText().length() != 9) {
-                mostrarAlerta(Alert.AlertType.ERROR, "Error en RFID", "Longitud incorrecta",
+                MostrarAlerta.AlertaError("Error en RFID", "Longitud incorrecta",
                         "El código RFID debe tener exactamente 9 caracteres. Actualmente tiene " + txtRFID.getText().length() + " caracteres.");
             } else {
-                mostrarAlerta(Alert.AlertType.ERROR, "Error en RFID", "Formato no válido",
+                MostrarAlerta.AlertaError("Error en RFID", "Formato no válido",
                         "El código RFID no es válido.");
             }
             return;
@@ -89,13 +85,13 @@ public class CrearProductoController {
         ProductoDAO productoDAO = new ProductoDAO();
         Producto nuevoProducto = new Producto(txtDescripcion.getText(), Long.parseLong(txtEAN13.getText()), txtRFID.getText());
         if (productoDAO.create(nuevoProducto)) {
-            mostrarAlerta(Alert.AlertType.INFORMATION, "Producto creado", "Éxito",
+            MostrarAlerta.AlertaExitosa("Producto creado", "Éxito",
                     "Producto creado correctamente:\nDescripción: " + txtDescripcion.getText() +
                             "\nEAN13: " + txtEAN13.getText() +
                             "\nKeyRFID: " + txtRFID.getText());
             limpiar(null);
         } else {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al crear producto", "Error",
+            MostrarAlerta.AlertaError("Error al crear producto", "Error",
                     "No se ha podido crear el producto. Por favor, inténtelo de nuevo.");
         }
     }
@@ -116,13 +112,5 @@ public class CrearProductoController {
 
     private boolean comprobarRFID(String RFID) {
         return RFID.matches("RFID[0-9]{5}");
-    }
-
-    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String encabezado, String contenido) {
-        Alert alert = new Alert(tipo);
-        alert.setTitle(titulo);
-        alert.setHeaderText(encabezado);
-        alert.setContentText(contenido);
-        alert.showAndWait();
     }
 }

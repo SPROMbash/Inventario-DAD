@@ -78,19 +78,10 @@ public class CrearMarcajeController {
             marcaje.setIdAula(aulaDAO.obtenerPorId(comboBoxIdAulas.getValue()));
             marcaje.setTipo(toggleButtonEntrada.isSelected());
             if (marcajeDAO.create(marcaje)) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Marcaje Creado");
-                alert.setHeaderText("Marcaje creado correctamente.");
-                alert.setContentText("ID del Aula: " + comboBoxIdAulas.getValue() +
-                        "\nID del Producto: " + comboBoxIdProductos.getValue() +
-                        "\nTipo: " + (toggleButtonEntrada.isSelected() ? "Entrada" : "Salida"));
-                alert.showAndWait();
+                MostrarAlerta.AlertaExitosa("Creación exitosa", "Marcaje creado", "Se ha creado el marcaje correctamente");
                 limpiar();
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error al crear el marcaje");
-                alert.setHeaderText("Ha ocurrido un error al crear el marcaje.");
-                alert.showAndWait();
+                MostrarAlerta.AlertaError("Error", "Error al intentar crear el marcaje", "No se ha podido crear el marcaje");
             }
         }
     }

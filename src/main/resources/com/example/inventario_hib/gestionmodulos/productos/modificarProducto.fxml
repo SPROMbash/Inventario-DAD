@@ -60,7 +60,7 @@
          <Font name="Calibri Bold" size="12.0" />
       </font>
    </Button>
-   <Button fx:id="botonLimpiar" layoutX="677.0" layoutY="560.0" mnemonicParsing="false" onAction="#limpiar" prefHeight="26.0" prefWidth="136.0" text="LIMPIAR CAMPOS">
+   <Button layoutX="677.0" layoutY="560.0" mnemonicParsing="false" onAction="#limpiar" prefHeight="26.0" prefWidth="136.0" text="LIMPIAR CAMPOS">
       <font>
          <Font name="Calibri Bold" size="12.0" />
       </font>

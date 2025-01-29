@@ -12,73 +12,71 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="950.0" style="-fx-background-color: #131d39;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.gestionmodulos.aulas.CrearAulaController">
-   <children>
-      <MenuBar layoutY="2.0" styleClass="menu-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <menus>
-            <Menu id="opcionAccesibilidad" mnemonicParsing="false" styleClass="menu-item" text="Accesibilidad">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#abrirAccesibilidad" text="Abrir Accesibilidad..." />
-               </items>
-            </Menu>
-            <Menu id="opcionAyuda" mnemonicParsing="false" styleClass="menu-item" text="Ayuda">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#abrirAyuda" text="Abrir Ayuda..." />
-               </items>
-            </Menu>
-         </menus>
-      </MenuBar>
-      <Label alignment="CENTER" layoutX="361.0" layoutY="79.0" styleClass="bold" text="CREAR AULAS" textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="36.0" />
-         </font>
-      </Label>
-      <Label layoutX="61.0" layoutY="164.0" prefHeight="23.0" prefWidth="121.0" text="DESCRIPCIÓN" textFill="WHITE">
-         <font>
-            <Font name="Calibri Bold" size="20.0" />
-         </font>
-      </Label>
-      <TextField fx:id="txtDescripcion" layoutX="61.0" layoutY="199.0" prefHeight="37.0" prefWidth="598.0" promptText="DESCRIPCIÓN">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </TextField>
-      <Label layoutX="62.0" layoutY="276.0" text="NUMERACIÓN" textFill="WHITE">
-         <font>
-            <Font name="Calibri Bold" size="20.0" />
-         </font>
-      </Label>
-      <Spinner fx:id="spinnerNumeracion1" layoutX="62.0" layoutY="310.0" prefHeight="25.0" prefWidth="63.0" />
-      <Spinner fx:id="spinnerNumeracion2" layoutX="137.0" layoutY="310.0" prefHeight="25.0" prefWidth="63.0" />
-      <Spinner fx:id="spinnerNumeracion3" layoutX="213.0" layoutY="310.0" prefHeight="25.0" prefWidth="63.0" />
-      <Label layoutX="65.0" layoutY="383.0" text="DIRECCIÓN IP" textFill="WHITE">
-         <font>
-            <Font name="Calibri Bold" size="20.0" />
-         </font>
-      </Label>
-      <Spinner fx:id="spinnerIp1" layoutX="65.0" layoutY="412.0" prefHeight="25.0" prefWidth="63.0" />
-      <Spinner fx:id="spinnerIp2" layoutX="150.0" layoutY="412.0" prefHeight="25.0" prefWidth="63.0" />
-      <Spinner fx:id="spinnerIp3" layoutX="227.0" layoutY="412.0" prefHeight="25.0" prefWidth="63.0" />
-      <Spinner fx:id="spinnerIp4" layoutX="308.0" layoutY="412.0" prefHeight="25.0" prefWidth="63.0" />
-      <Button layoutX="837.0" layoutY="560.0" mnemonicParsing="false" onAction="#volver" prefHeight="26.0" prefWidth="93.0" text="VOLVER">
-         <font>
-            <Font name="Calibri Bold" size="12.0" />
-         </font>
-      </Button>
-      <Button fx:id="botonLimpiar" layoutX="677.0" layoutY="560.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="136.0" text="LIMPIAR CAMPOS">
-         <font>
-            <Font name="Calibri Bold" size="12.0" />
-         </font>
-      </Button>
-      <Button fx:id="botonCrear" layoutX="523.0" layoutY="560.0" mnemonicParsing="false" onAction="#crearAula" prefHeight="26.0" prefWidth="136.0" text="CREAR AULA">
-         <font>
-            <Font name="Calibri Bold" size="12.0" />
-         </font>
-      </Button>
-      <ImageView fitHeight="90.0" fitWidth="76.0" layoutX="649.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../../img/Designer.png" />
-         </image>
-      </ImageView>
-   </children>
+<AnchorPane prefHeight="600.0" prefWidth="950.0" style="-fx-background-color: #131d39;"
+            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controladores.gestionmodulos.aulas.CrearAulaController">
+   <MenuBar layoutY="2.0" styleClass="menu-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+            AnchorPane.topAnchor="0.0">
+      <Menu id="opcionAccesibilidad" mnemonicParsing="false" styleClass="menu-item" text="Accesibilidad">
+         <MenuItem mnemonicParsing="false" onAction="#abrirAccesibilidad" text="Abrir Accesibilidad..."/>
+      </Menu>
+      <Menu id="opcionAyuda" mnemonicParsing="false" styleClass="menu-item" text="Ayuda">
+         <MenuItem mnemonicParsing="false" onAction="#abrirAyuda" text="Abrir Ayuda..."/>
+      </Menu>
+   </MenuBar>
+   <Label alignment="CENTER" layoutX="361.0" layoutY="79.0" styleClass="bold" text="CREAR AULAS" textAlignment="CENTER"
+          textFill="WHITE">
+      <font>
+         <Font name="System Bold" size="36.0"/>
+      </font>
+   </Label>
+   <Label layoutX="61.0" layoutY="164.0" prefHeight="23.0" prefWidth="121.0" text="DESCRIPCIÓN" textFill="WHITE">
+      <font>
+         <Font name="Calibri Bold" size="20.0"/>
+      </font>
+   </Label>
+   <TextField fx:id="txtDescripcion" layoutX="61.0" layoutY="199.0" prefHeight="37.0" prefWidth="598.0"
+              promptText="DESCRIPCIÓN">
+      <font>
+         <Font size="16.0"/>
+      </font>
+   </TextField>
+   <Label layoutX="62.0" layoutY="276.0" text="NUMERACIÓN" textFill="WHITE">
+      <font>
+         <Font name="Calibri Bold" size="20.0"/>
+      </font>
+   </Label>
+   <Spinner fx:id="spinnerNumeracion1" layoutX="62.0" layoutY="310.0" prefHeight="25.0" prefWidth="63.0"/>
+   <Spinner fx:id="spinnerNumeracion2" layoutX="137.0" layoutY="310.0" prefHeight="25.0" prefWidth="63.0"/>
+   <Spinner fx:id="spinnerNumeracion3" layoutX="213.0" layoutY="310.0" prefHeight="25.0" prefWidth="63.0"/>
+   <Label layoutX="65.0" layoutY="383.0" text="DIRECCIÓN IP" textFill="WHITE">
+      <font>
+         <Font name="Calibri Bold" size="20.0"/>
+      </font>
+   </Label>
+   <Spinner fx:id="spinnerIp1" layoutX="65.0" layoutY="412.0" prefHeight="25.0" prefWidth="63.0"/>
+   <Spinner fx:id="spinnerIp2" layoutX="150.0" layoutY="412.0" prefHeight="25.0" prefWidth="63.0"/>
+   <Spinner fx:id="spinnerIp3" layoutX="227.0" layoutY="412.0" prefHeight="25.0" prefWidth="63.0"/>
+   <Spinner fx:id="spinnerIp4" layoutX="308.0" layoutY="412.0" prefHeight="25.0" prefWidth="63.0"/>
+   <Button layoutX="837.0" layoutY="560.0" mnemonicParsing="false" onAction="#volver" prefHeight="26.0" prefWidth="93.0"
+           text="VOLVER">
+      <font>
+         <Font name="Calibri Bold" size="12.0"/>
+      </font>
+   </Button>
+   <Button layoutX="677.0" layoutY="560.0" mnemonicParsing="false" onAction="#limpiar" prefHeight="26.0"
+           prefWidth="136.0" text="LIMPIAR CAMPOS">
+      <font>
+         <Font name="Calibri Bold" size="12.0"/>
+      </font>
+   </Button>
+   <Button fx:id="botonCrear" layoutX="523.0" layoutY="560.0" mnemonicParsing="false" onAction="#crearAula"
+           prefHeight="26.0" prefWidth="136.0" text="CREAR AULA">
+      <font>
+         <Font name="Calibri Bold" size="12.0"/>
+      </font>
+   </Button>
+   <ImageView fitHeight="90.0" fitWidth="76.0" layoutX="649.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
+      <Image url="@../../../../../img/Designer.png"/>
+   </ImageView>
 </AnchorPane>

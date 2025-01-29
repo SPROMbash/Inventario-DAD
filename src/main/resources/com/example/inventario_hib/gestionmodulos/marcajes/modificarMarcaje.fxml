@@ -13,79 +13,80 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="950.0" style="-fx-background-color: #131d39;" stylesheets="@../../../../../estilos/estilos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.gestionmodulos.marcajes.ModificarMarcajeController">
-   <children>
-      <MenuBar layoutY="2.0" styleClass="menu-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <menus>
-            <Menu id="opcionAccesibilidad" mnemonicParsing="false" styleClass="menu-item" text="Accesibilidad">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#abrirAccesibilidad" text="Abrir Accesibilidad..." />
-               </items>
-            </Menu>
-            <Menu id="opcionAyuda" mnemonicParsing="false" styleClass="menu-item" text="Ayuda">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#abrirAyuda" text="Abrir Ayuda..." />
-               </items>
-            </Menu>
-         </menus>
-      </MenuBar>
-      <Label alignment="CENTER" layoutX="320.0" layoutY="78.0" styleClass="bold" text="MODIFICAR MARCAJES" textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="36.0" />
-         </font>
-      </Label>
-      <Label layoutX="77.0" layoutY="163.0" prefHeight="23.0" prefWidth="121.0" text="ID PRODUCTO" textFill="WHITE">
-         <font>
-            <Font name="Calibri Bold" size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="374.0" layoutY="163.0" text="ID AULA" textFill="WHITE">
-         <font>
-            <Font name="Calibri Bold" size="20.0" />
-         </font>
-      </Label>
-      <Button layoutX="837.0" layoutY="560.0" mnemonicParsing="false" onAction="#volver" prefHeight="26.0" prefWidth="93.0" text="VOLVER">
-         <font>
-            <Font name="Calibri Bold" size="12.0" />
-         </font>
-      </Button>
-      <Button fx:id="botonLimpiar" layoutX="677.0" layoutY="560.0" mnemonicParsing="false" onAction="#limpiar" prefHeight="26.0" prefWidth="136.0" text="LIMPIAR CAMPOS">
-         <font>
-            <Font name="Calibri Bold" size="12.0" />
-         </font>
-      </Button>
-      <Button layoutX="523.0" layoutY="560.0" mnemonicParsing="false" onAction="#modificarMarcaje" prefHeight="26.0" prefWidth="136.0" text="MODIFICAR MARCAJE">
-         <font>
-            <Font name="Calibri Bold" size="12.0" />
-         </font>
-      </Button>
-      <ImageView fitHeight="90.0" fitWidth="76.0" layoutX="39.0" layoutY="498.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../../img/Designer.png" />
-         </image>
-      </ImageView>
-      <ComboBox fx:id="comboBoxIdProductos" layoutX="78.0" layoutY="197.0" prefHeight="38.0" prefWidth="246.0" />
-      <ComboBox fx:id="comboBoxIdAulas" layoutX="374.0" layoutY="193.0" prefHeight="38.0" prefWidth="246.0" />
-      <Label layoutX="720.0" layoutY="193.0" text="TIPO DE MARCAJE" textFill="WHITE">
-         <font>
-            <Font name="Calibri Bold" size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="78.0" layoutY="300.0" prefHeight="23.0" prefWidth="184.0" text="FECHA DEL MARCAJE" textFill="WHITE">
-         <font>
-            <Font name="Calibri Bold" size="20.0" />
-         </font>
-      </Label>
-      <DatePicker fx:id="FechaMarcaje" layoutX="78.0" layoutY="334.0" prefHeight="38.0" prefWidth="746.0" />
-      <ToggleButton fx:id="toggleButtonEntrada" layoutX="699.0" layoutY="231.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="93.0" text="ENTRADA">
-         <font>
-            <Font name="Calibri Bold" size="15.0" />
-         </font>
-      </ToggleButton>
-      <ToggleButton fx:id="toggleButtonSalida" layoutX="809.0" layoutY="231.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="83.0" text="SALIDA">
-         <font>
-            <Font name="Calibri Bold" size="15.0" />
-         </font>
-      </ToggleButton>
-   </children>
+<AnchorPane prefHeight="600.0" prefWidth="950.0" style="-fx-background-color: #131d39;"
+            stylesheets="@../../../../../estilos/estilos.css" xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controladores.gestionmodulos.marcajes.ModificarMarcajeController">
+   <MenuBar layoutY="2.0" styleClass="menu-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+            AnchorPane.topAnchor="0.0">
+      <Menu id="opcionAccesibilidad" mnemonicParsing="false" styleClass="menu-item" text="Accesibilidad">
+         <MenuItem mnemonicParsing="false" onAction="#abrirAccesibilidad" text="Abrir Accesibilidad..."/>
+      </Menu>
+      <Menu id="opcionAyuda" mnemonicParsing="false" styleClass="menu-item" text="Ayuda">
+         <MenuItem mnemonicParsing="false" onAction="#abrirAyuda" text="Abrir Ayuda..."/>
+      </Menu>
+   </MenuBar>
+   <Label alignment="CENTER" layoutX="320.0" layoutY="78.0" styleClass="bold" text="MODIFICAR MARCAJES"
+          textAlignment="CENTER" textFill="WHITE">
+      <font>
+         <Font name="System Bold" size="36.0"/>
+      </font>
+   </Label>
+   <Label layoutX="77.0" layoutY="163.0" prefHeight="23.0" prefWidth="121.0" text="ID PRODUCTO" textFill="WHITE">
+      <font>
+         <Font name="Calibri Bold" size="20.0"/>
+      </font>
+   </Label>
+   <Label layoutX="374.0" layoutY="163.0" text="ID AULA" textFill="WHITE">
+      <font>
+         <Font name="Calibri Bold" size="20.0"/>
+      </font>
+   </Label>
+   <Button layoutX="837.0" layoutY="560.0" mnemonicParsing="false" onAction="#volver" prefHeight="26.0" prefWidth="93.0"
+           text="VOLVER">
+      <font>
+         <Font name="Calibri Bold" size="12.0"/>
+      </font>
+   </Button>
+   <Button layoutX="677.0" layoutY="560.0" mnemonicParsing="false" onAction="#limpiar" prefHeight="26.0"
+           prefWidth="136.0" text="LIMPIAR CAMPOS">
+      <font>
+         <Font name="Calibri Bold" size="12.0"/>
+      </font>
+   </Button>
+   <Button layoutX="523.0" layoutY="560.0" mnemonicParsing="false" onAction="#modificarMarcaje" prefHeight="26.0"
+           prefWidth="136.0" text="MODIFICAR MARCAJE">
+      <font>
+         <Font name="Calibri Bold" size="12.0"/>
+      </font>
+   </Button>
+   <ImageView fitHeight="90.0" fitWidth="76.0" layoutX="39.0" layoutY="498.0" pickOnBounds="true"
+              preserveRatio="true">
+      <Image url="@../../../../../img/Designer.png"/>
+   </ImageView>
+   <ComboBox fx:id="comboBoxIdProductos" layoutX="78.0" layoutY="197.0" prefHeight="38.0" prefWidth="246.0"/>
+   <ComboBox fx:id="comboBoxIdAulas" layoutX="374.0" layoutY="193.0" prefHeight="38.0" prefWidth="246.0"/>
+   <Label layoutX="720.0" layoutY="193.0" text="TIPO DE MARCAJE" textFill="WHITE">
+      <font>
+         <Font name="Calibri Bold" size="20.0"/>
+      </font>
+   </Label>
+   <Label layoutX="78.0" layoutY="300.0" prefHeight="23.0" prefWidth="184.0" text="FECHA DEL MARCAJE" textFill="WHITE">
+      <font>
+         <Font name="Calibri Bold" size="20.0"/>
+      </font>
+   </Label>
+   <DatePicker fx:id="FechaMarcaje" layoutX="78.0" layoutY="334.0" prefHeight="38.0" prefWidth="746.0"/>
+   <ToggleButton fx:id="toggleButtonEntrada" layoutX="699.0" layoutY="231.0" mnemonicParsing="false" prefHeight="28.0"
+                 prefWidth="93.0" text="ENTRADA">
+      <font>
+         <Font name="Calibri Bold" size="15.0"/>
+      </font>
+   </ToggleButton>
+   <ToggleButton fx:id="toggleButtonSalida" layoutX="809.0" layoutY="231.0" mnemonicParsing="false" prefHeight="28.0"
+                 prefWidth="83.0" text="SALIDA">
+      <font>
+         <Font name="Calibri Bold" size="15.0"/>
+      </font>
+   </ToggleButton>
 </AnchorPane>

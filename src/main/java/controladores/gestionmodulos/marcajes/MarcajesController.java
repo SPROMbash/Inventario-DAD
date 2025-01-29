@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import modelo.Marcaje;
+import modelo.MostrarAlerta;
 
 import java.awt.*;
 import java.io.File;
@@ -39,10 +40,6 @@ public class MarcajesController {
     private TableColumn<Marcaje, Boolean> columnaTipo;
 
     @FXML
-    private Button botonLimpiar;
-
-
-    @FXML
     public void initialize() {
         columnaIdMarcaje.setCellValueFactory(new PropertyValueFactory<>("idMarcaje"));
         columnaIdAula.setCellValueFactory(new PropertyValueFactory<>("idAula"));
@@ -62,10 +59,6 @@ public class MarcajesController {
         FechaFinal.valueProperty().addListener((observable, oldValue, newValue) -> {
             filtrarEntreFechas();
         });
-
-        botonLimpiar.setOnAction(event ->
-                limpiar()
-        );
 
         tablaDeMarcajes.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             marcajeSeleccionado = newValue;
@@ -158,11 +151,8 @@ public class MarcajesController {
                 App.setUserData(marcajeSeleccionado);
                 App.setRoot("/com/example/inventario_hib/gestionmodulos/marcajes/modificarMarcaje", "Modificar Marcaje");
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Error");
-                alert.setContentText("Debes seleccionar un marcaje para poder modificarlo.");
-                alert.showAndWait();
+                MostrarAlerta.AlertaError("Error", "Error", "Debes seleccionar un marcaje para poder modificarlo");
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -175,32 +165,19 @@ public class MarcajesController {
                 Alert alertConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
                 alertConfirmation.setTitle("Eliminar marcaje");
                 alertConfirmation.setHeaderText("¿Estás seguro de que deseas eliminar el marcaje?");
-                alertConfirmation.setContentText("Se eliminará el marcaje seleccionado.");
                 alertConfirmation.showAndWait();
                 if (alertConfirmation.getResult() != ButtonType.OK) {
                     return;
                 } else {
                     if (marcajeDAO.delete(marcajeSeleccionado)) {
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Éxito");
-                        alert.setHeaderText("Marcaje eliminado.");
-                        alert.setContentText("El marcaje seleccionado ha sido eliminado correctamente.");
-                        alert.showAndWait();
+                        MostrarAlerta.AlertaExitosa("Eliminación exitosa", "Marcaje eliminado", "Se ha eliminado el marcaje correctamente.");
                         cargarMarcajes();
                     } else {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Error");
-                        alert.setHeaderText("Error al eliminar el maracje.");
-                        alert.setContentText("Ha ocurrido un error al intentar eliminar el marcaje seleccionado.");
-                        alert.showAndWait();
+                        MostrarAlerta.AlertaError("Error", "Error al intentar eliminar el marcaje", "No se ha podido eliminar el marcaje");
                     }
                 }
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Error");
-                alert.setContentText("Debes seleccionar un marcaje para poder modificarlo.");
-                alert.showAndWait();
+                MostrarAlerta.AlertaError("Error", "Error", "Debes seleccionar un marcaje para poder eliminarlo");
             }
         } catch (Exception e) {
             e.printStackTrace();

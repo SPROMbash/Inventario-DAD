@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import modelo.AbrirAccesibilidad;
 import modelo.AbrirAyuda;
 import modelo.Aula;
+import modelo.MostrarAlerta;
 
 import java.awt.*;
 import java.io.File;
@@ -41,9 +42,6 @@ public class ModificarAulaController {
     private Spinner<Integer> spinnerIp4;
 
     @FXML
-    private Button botonLimpiar;
-
-    @FXML
     public void initialize() {
         aulaSeleccionada = (Aula) App.getUserData();
 
@@ -57,10 +55,6 @@ public class ModificarAulaController {
         spinnerNumeracion3.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 25, 0));
 
         limpiar();
-
-        botonLimpiar.setOnAction(event -> {
-            limpiar();
-        });
     }
 
     public void abrirAccesibilidad(ActionEvent actionEvent) {
@@ -101,41 +95,11 @@ public class ModificarAulaController {
             aulaSeleccionada.setDireccionIp(getDireccionIp());
             aulaSeleccionada.setNumeracion(getNumeracion());
             if (aulaDAO.update(aulaSeleccionada)) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Aula modfiicada");
-                alert.setHeaderText("Aula modificada correctamente.");
-                alert.setContentText("Descripción: " + txtDescripcion.getText() +
-                        "\nDirección IP: " + getDireccionIp() +
-                        "\nNumeración: " + spinnerNumeracion1.getValue() + "." + spinnerNumeracion2.getValue() + "." + spinnerNumeracion3.getValue());
-                alert.showAndWait();
+                MostrarAlerta.AlertaExitosa("Modificación exitosa", "Aula modificada", "Aula modificada correctamente");
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Modificar Aula");
-                alert.setHeaderText("Error al modificar el aula.");
-                alert.showAndWait();
+                MostrarAlerta.AlertaError("Error", "Error al intentar modificar el aula", "No se ha podido modificar el aula");
             }
         }
-    }
-
-    private void establecerSpinnerIp(String[] campos) {
-        spinnerIp1.getValueFactory().setValue(Integer.parseInt(campos[0]));
-        spinnerIp2.getValueFactory().setValue(Integer.parseInt(campos[1]));
-        spinnerIp3.getValueFactory().setValue(Integer.parseInt(campos[2]));
-        spinnerIp4.getValueFactory().setValue(Integer.parseInt(campos[3]));
-    }
-    private void establecerSpinnerNumeracion(String[] campos) {
-        spinnerNumeracion1.getValueFactory().setValue(Integer.parseInt(campos[0]));
-        spinnerNumeracion2.getValueFactory().setValue(Integer.parseInt(campos[1]));
-        spinnerNumeracion3.getValueFactory().setValue(Integer.parseInt(campos[2]));
-    }
-
-    private List<Long> obtenerIdAulas() {
-        List<Aula> aulas = aulaDAO.getTodos();
-        List<Long> ids = new ArrayList<>();
-        for (Aula aula : aulas) {
-            ids.add(aula.getIdAula());
-        }
-        return ids;
     }
 
     private boolean comprobarCampos() {

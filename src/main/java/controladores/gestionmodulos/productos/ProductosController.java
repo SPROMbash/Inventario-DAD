@@ -9,6 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import modelo.AbrirAccesibilidad;
+import modelo.AbrirAyuda;
+import modelo.MostrarAlerta;
 import modelo.Producto;
 
 import java.awt.*;
@@ -37,9 +40,6 @@ public class ProductosController {
     private TableColumn<Producto, Boolean> columnaKeyRFID;
 
     @FXML
-    private Button botonLimpiar;
-
-    @FXML
     public void initialize() {
         columnaIdProducto.setCellValueFactory(new PropertyValueFactory<>("idProducto"));
         columnaDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
@@ -53,10 +53,6 @@ public class ProductosController {
 
         txtRFID.textProperty().addListener((observable, oldValue, newValue) -> {
             filtrarRFID();
-        });
-
-        botonLimpiar.setOnAction(event -> {
-            limpiar();
         });
 
         tablaDeProductos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -97,39 +93,13 @@ public class ProductosController {
         }
     }
 
-    public void abrirAyuda(ActionEvent actionEvent) {
-        try {
-            String rutaAyuda = "C:/Users/tecen/Documents/HelpNDoc/Output/chm/AyudaApp.chm";
-
-            File archivoAyuda = new File(rutaAyuda);
-
-            if (archivoAyuda.exists()) {
-                Desktop.getDesktop().open(archivoAyuda);
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Archivo de ayuda no encontrado");
-                alert.setContentText("No se pudo encontrar el archivo de ayuda en la ruta especificada:\n" + rutaAyuda);
-                alert.showAndWait();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error al abrir la ayuda");
-            alert.setContentText("Ocurrió un error al intentar abrir el archivo de ayuda. Por favor, inténtelo de nuevo.");
-            alert.showAndWait();
-        }
-    }
-
     public void abrirAccesibilidad(ActionEvent actionEvent) {
-        try {
-            App.setRoot("/com/example/inventario_hib/opcionesMenu/accesibilidad", "Accesibilidad");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        AbrirAccesibilidad.abrir();
     }
 
+    public void abrirAyuda(ActionEvent actionEvent) {
+        AbrirAyuda.abrir();
+    }
 
     public void crearProducto(MouseEvent mouseEvent) {
         try {
@@ -145,11 +115,11 @@ public class ProductosController {
                 App.setUserData(productoSeleccionado);
                 App.setRoot("/com/example/inventario_hib/gestionmodulos/productos/modificarProducto", "Modificar Producto");
             } else {
-                mostrarAlerta(Alert.AlertType.ERROR, "Error", "Error al modificar producto", "Debes seleccionar un producto para poder modificarlo.");
+                MostrarAlerta.AlertaError("Error", "Error al modificar producto", "Debes seleccionar un producto para poder modificarlo.");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            mostrarAlerta(Alert.AlertType.ERROR, "Error inesperado", "Error", "Ocurrió un error inesperado al intentar modificar el producto.");
+            MostrarAlerta.AlertaError("Error inesperado", "Error", "Ocurrió un error inesperado al intentar modificar el producto.");
         }
     }
 
@@ -159,33 +129,23 @@ public class ProductosController {
                 Alert alertConfirmacion = new Alert(Alert.AlertType.CONFIRMATION);
                 alertConfirmacion.setTitle("Confirmación");
                 alertConfirmacion.setHeaderText("¿Estás seguro de que deseas eliminar el producto?");
-                alertConfirmacion.setContentText("Se eliminará el producto seleccionado.");
-
                 if (alertConfirmacion.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) {
-                    return; // Si el usuario cancela, no pasa nada más
+                    return;
                 }
 
                 if (productoDAO.delete(productoSeleccionado)) {
-                    mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Producto eliminado", "El producto ha sido eliminado correctamente.");
+                    MostrarAlerta.AlertaExitosa("Éxito", "Producto eliminado", "El producto ha sido eliminado correctamente.");
                     cargarProductos();
                 } else {
-                    mostrarAlerta(Alert.AlertType.ERROR, "Error", "Error al eliminar producto", "No se ha podido eliminar el producto seleccionado.");
+                    MostrarAlerta.AlertaError( "Error", "Error al eliminar producto", "No se ha podido eliminar el producto seleccionado.");
                 }
             } else {
-                mostrarAlerta(Alert.AlertType.ERROR, "Error", "Error al eliminar producto", "Debes seleccionar un producto para eliminarlo.");
+                MostrarAlerta.AlertaError( "Error", "Error al eliminar producto", "Debes seleccionar un producto para eliminarlo.");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            mostrarAlerta(Alert.AlertType.ERROR, "Error inesperado", "Error", "Ocurrió un error inesperado al intentar eliminar el producto.");
+            MostrarAlerta.AlertaError( "Error inesperado", "Error", "Ocurrió un error inesperado al intentar eliminar el producto.");
         }
-    }
-
-    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String encabezado, String contenido) {
-        Alert alert = new Alert(tipo);
-        alert.setTitle(titulo);
-        alert.setHeaderText(encabezado);
-        alert.setContentText(contenido);
-        alert.showAndWait();
     }
 
     public void mostrarMensajeNoDisponible(ActionEvent actionEvent) {
@@ -204,6 +164,7 @@ public class ProductosController {
         }
     }
 
+    @FXML
     private void limpiar() {
         txtDescripcion.clear();
         txtRFID.clear();

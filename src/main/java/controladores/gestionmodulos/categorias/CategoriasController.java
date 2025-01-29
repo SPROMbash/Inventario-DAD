@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import modelo.Categoria;
+import modelo.*;
 
 import java.awt.*;
 import java.io.File;
@@ -21,33 +21,30 @@ public class CategoriasController {
     private Categoria categoriaSeleccionada;
 
     @FXML
-    private TextField txtNombre;
+    private TextField txtNombreCategoria;
     @FXML
     private TextField txtDescripcion;
 
     @FXML
-    private TableView<Categoria> tablaCategorias;
+    private TableView<Categoria> tablaDeCategorias;
     @FXML
-    private TableColumn<Categoria, Long> colIdCategoria;
+    private TableColumn<Categoria, Long> columnaIdCategoria;
     @FXML
-    private TableColumn<Categoria, String> colNombre;
+    private TableColumn<Categoria, String> columnaNombre;
     @FXML
-    private TableColumn<Categoria, String> colDescripcion;
+    private TableColumn<Categoria, String> columnaDescripcion;
     @FXML
-    private TableColumn<Categoria, Boolean> colEstado;
-
-    @FXML
-    private Button botonLimpiar;
+    private TableColumn<Categoria, Boolean> columnaEstado;
 
     @FXML
     public void initialize() {
-        colIdCategoria.setCellValueFactory(new PropertyValueFactory<>("idCategoria"));
-        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        colDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
-        colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
+        columnaIdCategoria.setCellValueFactory(new PropertyValueFactory<>("idCategoria"));
+        columnaNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        columnaDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+        columnaEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
         cargarCategorias();
 
-        txtNombre.textProperty().addListener((observable, oldValue, newValue) -> {
+        txtNombreCategoria.textProperty().addListener((observable, oldValue, newValue) -> {
             filtrarNombre();
         });
 
@@ -55,25 +52,21 @@ public class CategoriasController {
             filtrarDescripcion();
         });
 
-        botonLimpiar.setOnAction(event -> {
-            limpiar();
-        });
-
-        tablaCategorias.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        tablaDeCategorias.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             categoriaSeleccionada = newValue;
         });
     }
 
     private void cargarCategorias() {
         List<Categoria> categorias = categoriaDAO.getTodos();
-        tablaCategorias.getItems().setAll(categorias);
+        tablaDeCategorias.getItems().setAll(categorias);
     }
 
     private void filtrarNombre() {
-        if (!txtNombre.getText().isEmpty()) {
-            List<Categoria> categorias = categoriaDAO.getPorNombre(txtNombre.getText());
-            tablaCategorias.getItems().clear();
-            tablaCategorias.getItems().setAll(categorias);
+        if (!txtNombreCategoria.getText().isEmpty()) {
+            List<Categoria> categorias = categoriaDAO.getPorNombre(txtNombreCategoria.getText());
+            tablaDeCategorias.getItems().clear();
+            tablaDeCategorias.getItems().setAll(categorias);
         } else {
             cargarCategorias();
         }
@@ -82,57 +75,44 @@ public class CategoriasController {
     private void filtrarDescripcion() {
         if (!txtDescripcion.getText().isEmpty()) {
             List<Categoria> categorias = categoriaDAO.getPorDescripcion(txtDescripcion.getText());
-            tablaCategorias.getItems().clear();
-            tablaCategorias.getItems().setAll(categorias);
+            tablaDeCategorias.getItems().clear();
+            tablaDeCategorias.getItems().setAll(categorias);
         } else {
             cargarCategorias();
         }
     }
 
     public void abrirAccesibilidad(ActionEvent actionEvent) {
-        try {
-            App.setRoot("/com/example/inventario_hib/opcionesMenu/accesibilidad", "Accesibilidad.");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        AbrirAccesibilidad.abrir();
     }
 
     public void abrirAyuda(ActionEvent actionEvent) {
-        try {
-            String rutaAyuda = "C:/Users/tecen/Documents/HelpNDoc/Output/chm/AyudaApp.chm";
-
-            File archivoAyuda = new File(rutaAyuda);
-
-            if (archivoAyuda.exists()) {
-                Desktop.getDesktop().open(archivoAyuda);
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Archivo de ayuda no encontrado");
-                alert.setContentText("No se pudo encontrar el archivo de ayuda en la ruta especificada:\n" + rutaAyuda);
-                alert.showAndWait();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error al abrir la ayuda");
-            alert.setContentText("Ocurrió un error al intentar abrir el archivo de ayuda. Por favor, inténtelo de nuevo.");
-            alert.showAndWait();
-        }
+        AbrirAyuda.abrir();
     }
 
     public void volver(ActionEvent actionEvent) {
         try {
-            App.setRoot("/com/example/inventario_hib/gestionmodulos/gestionModulos", "Gestión de los distintos módulos");
+            App.setRoot("/com/example/inventario_hib/gestionmodulos/gestionModulos", "GESTIÓN DE LOS DISTINTOS MÓDULOS");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    public void abrirConfiguracion(){
+        AbrirConfiguracion.abrir();
+    }
+
+    public void mostrarMensajeNoDisponible(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Función no disponible");
+        alert.setHeaderText(null);
+        alert.setContentText("Esta función estará disponible en versiones posteriores.");
+        alert.showAndWait();
+    }
+
     public void crearCategoria(MouseEvent mouseEvent) {
         try {
-            App.setRoot("/com/example/inventario_hib/gestionmodulos/categorias/crearCategoria.fxml", "Crear categorías.");
+            App.setRoot("/com/example/inventario_hib/gestionmodulos/categorias/crearCategoria", "CREAR CATEGORÍA");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -142,13 +122,9 @@ public class CategoriasController {
         try {
             if (categoriaSeleccionada != null) {
                 App.setUserData(categoriaSeleccionada);
-                App.setRoot("/com/example/inventario_hib/gestionmodulos/categorias/modificarCategoria", "Modificar categorías");
+                App.setRoot("/com/example/inventario_hib/gestionmodulos/categorias/modificarCategoria", "MODIFICAR CATEGORÍA");
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Error");
-                alert.setContentText("Selecciona una categoría para modificarla");
-                alert.showAndWait();
+                MostrarAlerta.AlertaError("Error", "Error", "Debes seleccionar una categoria para poder modificarla");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -161,46 +137,30 @@ public class CategoriasController {
                 Alert alertConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
                 alertConfirmation.setTitle("Eliminar categoría");
                 alertConfirmation.setHeaderText("¿Estás seguro de que deseas eliminar la categoría?");
-                alertConfirmation.setContentText("Se eliminará la categoría seleccionada.");
                 alertConfirmation.showAndWait();
 
                 if (alertConfirmation.getResult() != ButtonType.OK) {
                     return;
                 } else {
-
                     if (categoriaDAO.delete(categoriaSeleccionada)) {
-
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Éxito");
-                        alert.setHeaderText("Categoría eliminada.");
-                        alert.setContentText("Se ha eliminado correctamente.");
-                        alert.showAndWait();
+                        MostrarAlerta.AlertaExitosa("Eliminación exitosa", "Categoría eliminada", "Se ha eliminado la categoría correctamente.");
                         cargarCategorias();
-
                     } else {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Error");
-                        alert.setHeaderText("Error al eliminar la categoría.");
-                        alert.setContentText("Ha ocurrido un error al intentar eliminar la categoría seleccionada.");
-                        alert.showAndWait();
+                        MostrarAlerta.AlertaError("Error", "Error al intentar eliminar la categoría", "No se ha podido eliminar la categoría");
                     }
                 }
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Error: categoría no seleccionada");
-                alert.setContentText("Selecciona una categoría para eliminarla.");
-                alert.showAndWait();
+                MostrarAlerta.AlertaError("Error", "Error", "Debes seleccionar una categoria para poder eliminarla");
             }
-
             App.setRoot("/com/example/inventario_hib/gestionmodulos/categorias/eliminarCategoria", "Eliminar categorías");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    @FXML
     private void limpiar() {
-        txtNombre.clear();
+        txtNombreCategoria.clear();
         txtDescripcion.clear();
         cargarCategorias();
     }

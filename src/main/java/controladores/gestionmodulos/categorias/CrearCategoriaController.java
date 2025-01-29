@@ -4,13 +4,13 @@ import DAO.CategoriaDAO;
 import com.example.inventario_hib.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import modelo.AbrirAccesibilidad;
 import modelo.AbrirAyuda;
 import modelo.Categoria;
+import modelo.MostrarAlerta;
 
 import java.awt.*;
 import java.io.File;
@@ -18,22 +18,20 @@ import java.io.IOException;
 
 public class CrearCategoriaController {
     @FXML
-    private TextField txtNombre;
+    private TextField txtNombreCategoria;
     @FXML
     private TextField txtDescripcion;
     @FXML
-    private RadioButton rbActivada;
+    private ToggleButton toggleButtonActivo;
     @FXML
-    private RadioButton rbDesactivada;
-
-    @FXML
-    private Button buttonLimpiar;
+    private ToggleButton toggleButtonDesactivado;
 
     @FXML
     public void initialize() {
-        buttonLimpiar.setOnAction(event ->
-                limpiar(event)
-        );
+
+        ToggleGroup EstadoCategoriaGroup = new ToggleGroup();
+        toggleButtonActivo.setToggleGroup(EstadoCategoriaGroup);
+        toggleButtonDesactivado.setToggleGroup(EstadoCategoriaGroup);
     }
 
     public void abrirAccesibilidad(ActionEvent actionEvent) {
@@ -52,40 +50,41 @@ public class CrearCategoriaController {
         }
     }
 
-    public void crear(ActionEvent actionEvent) {
+    public void crearCategoria(ActionEvent actionEvent) {
         if (comprobarCampos()) {
-            boolean estado = rbActivada.isSelected();
+            boolean estado = toggleButtonActivo.isSelected();
             CategoriaDAO categoriaDAO = new CategoriaDAO();
-            Categoria categoria = new Categoria(txtNombre.getText(), txtDescripcion.getText(), estado);
+            Categoria categoria = new Categoria(txtNombreCategoria.getText(), txtDescripcion.getText(), estado);
             if (categoriaDAO.create(categoria)) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Categoría creada");
-                alert.setHeaderText("Categoría creada correctamente.");
-                alert.setContentText("Nombre: " + txtNombre.getText() +
-                        "\nDescripción: " + txtDescripcion.getText() +
-                        "\nEstado: " + (estado ? "Activado" : "Desactivado"));
-                alert.showAndWait();
+                MostrarAlerta.AlertaExitosa("Creación exitosa", "Categoría creada", "Se ha creado la categoría correctamente");
                 limpiar(null);
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error al crear la categoría");
-                alert.setHeaderText("Ha ocurrido un error al crear la categoría.");
-                alert.showAndWait();
+                MostrarAlerta.AlertaError("Error", "Error al intentar crear la categoría", "No se ha podido crear la categoría");
             }
         }
     }
 
     private boolean comprobarCampos() {
-        if (txtNombre.getText().isEmpty() && txtDescripcion.getText().isEmpty()) {
+        String nombreCategoria = txtNombreCategoria.getText();
+        String descripcion = txtDescripcion.getText();
+
+        if (nombreCategoria.isEmpty() || descripcion.isEmpty()) {
+            MostrarAlerta.showAlert("Faltan campos por rellenar.");
+            return false;
+        }
+
+        if (descripcion.matches("\\d+")) {
+            MostrarAlerta.showAlert("No se permite introducir solo números en la descripción.");
             return false;
         }
         return true;
     }
 
+    @FXML
     private void limpiar(ActionEvent event) {
-        txtNombre.clear();
+        txtNombreCategoria.clear();
         txtDescripcion.clear();
-        rbActivada.setSelected(true);
-        rbDesactivada.setSelected(false);
+        toggleButtonActivo.setSelected(true);
+        toggleButtonDesactivado.setSelected(false);
     }
 }

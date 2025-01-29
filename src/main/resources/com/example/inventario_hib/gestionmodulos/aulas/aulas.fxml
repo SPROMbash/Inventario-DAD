@@ -19,23 +19,18 @@
       <URL value="@../../../../../estilos/estilos.css" />
       <URL value="@../../../../../estilos/tabla.css" />
    </stylesheets>
-   <MenuBar layoutY="2.0" styleClass="menu-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <menus>
-         <Menu id="opcionAccesibilidad" mnemonicParsing="false" styleClass="menu-item" text="Herramientas">
-            <items>
-               <MenuItem mnemonicParsing="false" onAction="#abrirAccesibilidad" text="Accesibilidad" />
-               <MenuItem mnemonicParsing="false" onAction="#abrirConfiguracion" text="Configuración" />
-            </items>
-         </Menu>
-         <Menu mnemonicParsing="false" text="Ayuda">
-            <items>
-               <MenuItem mnemonicParsing="false" onAction="#abrirAyuda" text="Manual de Usuario" />
-               <MenuItem mnemonicParsing="false" onAction="#mostrarMensajeNoDisponible" text="Acerca de" />
-               <MenuItem mnemonicParsing="false" onAction="#mostrarMensajeNoDisponible" text="Soporte Técnico" />
-               <MenuItem mnemonicParsing="false" onAction="#mostrarMensajeNoDisponible" text="Actualizaciones" />
-            </items>
-         </Menu>
-      </menus>
+   <MenuBar layoutY="2.0" styleClass="menu-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+            AnchorPane.topAnchor="0.0">
+      <Menu id="opcionAccesibilidad" mnemonicParsing="false" styleClass="menu-item" text="Herramientas">
+         <MenuItem mnemonicParsing="false" onAction="#abrirAccesibilidad" text="Accesibilidad"/>
+         <MenuItem mnemonicParsing="false" onAction="#abrirConfiguracion" text="Configuración"/>
+      </Menu>
+      <Menu mnemonicParsing="false" text="Ayuda">
+         <MenuItem mnemonicParsing="false" onAction="#abrirAyuda" text="Manual de Usuario"/>
+         <MenuItem mnemonicParsing="false" onAction="#mostrarMensajeNoDisponible" text="Acerca de"/>
+         <MenuItem mnemonicParsing="false" onAction="#mostrarMensajeNoDisponible" text="Soporte Técnico"/>
+         <MenuItem mnemonicParsing="false" onAction="#mostrarMensajeNoDisponible" text="Actualizaciones"/>
+      </Menu>
    </MenuBar>
    <Label alignment="CENTER" layoutX="312.0" layoutY="63.0" prefHeight="35.0" prefWidth="326.0" styleClass="bold" text="GESTIÓN DE AULAS" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="312.0" AnchorPane.rightAnchor="312.0">
       <font>
@@ -106,12 +101,12 @@
          </Label>
       </HBox>
    </HBox>
-   <Button fx:id="botonLimpiar" layoutX="667.0" layoutY="550.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="136.0" text="LIMPIAR FILTROS">
+   <Button layoutX="550.0" layoutY="550.0" mnemonicParsing="false" onAction="#limpiar" prefHeight="26.0" prefWidth="136.0" text="LIMPIAR FILTROS">
       <font>
          <Font name="Calibri Bold" size="12.0" />
       </font>
    </Button>
-   <Button layoutX="827.0" layoutY="550.0" mnemonicParsing="false" onAction="#volver" prefHeight="26.0" prefWidth="93.0" text="VOLVER">
+   <Button layoutX="701.0" layoutY="550.0" mnemonicParsing="false" onAction="#volver" prefHeight="26.0" prefWidth="219.0" text="VOLVER AL APARTADO DE GESTIÓN">
       <font>
          <Font name="Calibri Bold" size="12.0" />
       </font>

@@ -64,7 +64,7 @@ public class GestionModulosController {
 
     public void volver(ActionEvent actionEvent) {
         try {
-            App.setRoot("dashboard", "Programa de Gestión de Inventario");
+            App.setRoot("dashboard", "PROGRAMA DE GESTIÓN DE INVENTARIO");
         } catch (IOException e) {
             e.printStackTrace();
         }

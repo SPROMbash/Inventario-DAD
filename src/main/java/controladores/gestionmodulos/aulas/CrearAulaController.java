@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import modelo.AbrirAccesibilidad;
 import modelo.AbrirAyuda;
 import modelo.Aula;
+import modelo.MostrarAlerta;
 
 import java.awt.*;
 import java.io.File;
@@ -34,8 +35,6 @@ public class CrearAulaController {
     @FXML
     private Spinner<Integer> spinnerIp4;
 
-    @FXML
-    private Button botonLimpiar;
 
     @FXML
     public void initialize() {
@@ -48,9 +47,6 @@ public class CrearAulaController {
         spinnerNumeracion2.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10, 0));
         spinnerNumeracion3.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 25, 0));
 
-        botonLimpiar.setOnAction(event ->
-                limpiar(event)
-        );
     }
 
     public void abrirAccesibilidad(ActionEvent actionEvent) {
@@ -69,29 +65,47 @@ public class CrearAulaController {
         }
     }
 
-
-
     private boolean comprobarCampos() {
-        if (comprobarDescripcion() && comprobarIp() && comprobarNumeracion()) {
-            return true;
+        String descripcion = txtDescripcion.getText();
+        String ip = spinnerIp1.getValue() + "." + spinnerIp2.getValue() + "." + spinnerIp3.getValue() + "." + spinnerIp4.getValue();
+        String numeracion = spinnerNumeracion1.getValue() + "." + spinnerNumeracion2.getValue() + "." + spinnerNumeracion3.getValue();
+
+        if (descripcion.isEmpty() || ip.equals("0.0.0.0") || numeracion.equals("0.0.0")) {
+            showAlert("Faltan campos por rellenar o la IP/Numeración no puede ser 0.0.0.0/0.0.0.");
+            return false;
         }
-        return false;
+
+        if (descripcion.matches("\\d+")) {
+            showAlert("No se permite introducir solo números en la descripción.");
+            return false;
+        }
+
+        if (!comprobarIp()) {
+            showAlert("La dirección IP ingresada no es válida.");
+            return false;
+        }
+
+        if (!comprobarNumeracion()) {
+            showAlert("La numeración ingresada no es válida.");
+            return false;
+        }
+
+        return true;
     }
 
-    private boolean comprobarDescripcion() {
-        if (!txtDescripcion.getText().isEmpty()) {
-            return true;
-        }
-        return false;
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error de validación");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
+
 
     private boolean comprobarIp() {
         if (spinnerIp1.getValue() != null && spinnerIp2.getValue() != null && spinnerIp3.getValue() != null && spinnerIp4.getValue() != null) {
             String ip = spinnerIp1.getValue() + "." + spinnerIp2.getValue() + "." + spinnerIp3.getValue() + "." + spinnerIp4.getValue();
-            if (ip.matches("^(?:\\d{1,3}\\.){3}\\d{1,3}$")) {
-                return true;
-            }
-            return false;
+            return ip.matches("^(?:\\d{1,3}\\.){3}\\d{1,3}$");
         }
         return false;
     }
@@ -99,10 +113,7 @@ public class CrearAulaController {
     private boolean comprobarNumeracion() {
         if (spinnerNumeracion1.getValue() != null && spinnerNumeracion2.getValue() != null && spinnerNumeracion3.getValue() != null) {
             String numeracion = spinnerNumeracion1.getValue() + "." + spinnerNumeracion2.getValue() + "." + spinnerNumeracion3.getValue();
-            if (numeracion.matches("^\\d{1,2}\\.\\d{1,2}\\.\\d{1,2}$")) {
-                return true;
-            }
-            return false;
+            return numeracion.matches("^\\d{1,2}\\.\\d{1,2}\\.\\d{1,2}$");
         }
         return false;
     }
@@ -128,20 +139,10 @@ public class CrearAulaController {
             String numeracion = spinnerNumeracion1.getValue() + "." + spinnerNumeracion2.getValue() + "." + spinnerNumeracion3.getValue();
             Aula aula = new Aula(numeracion, descripcion, ip);
             if (aulaDAO.create(aula)) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Aula creada");
-                alert.setHeaderText("Aula creada correctamente.");
-                alert.setContentText("Descripción: " + txtDescripcion.getText() +
-                        "\nDirección IP: " + spinnerIp1.getValue() + "." + spinnerIp2.getValue() + "." + spinnerIp3.getValue() + "." + spinnerIp4.getValue() +
-                        "\nNumeración: " + spinnerNumeracion1.getValue() + "." + spinnerNumeracion2.getValue() + "." + spinnerNumeracion3.getValue());
-                alert.showAndWait();
+                MostrarAlerta.AlertaExitosa("Creación exitosa", "Aula creada", "Aula creada correctamente");
                 limpiar(null);
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error al crear el Aula");
-                alert.setHeaderText("Error al crear el Aula.");
-                alert.setContentText("No se ha podido crear el aula. Por favor, inténtelo de nuevo.");
-                alert.showAndWait();
+                MostrarAlerta.AlertaError("Error", "Error al intentar eliminar el aula", "No se ha podido crear el aula");
             }
         }
     }

@@ -10,10 +10,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import modelo.AbrirAccesibilidad;
-import modelo.AbrirAyuda;
-import modelo.AbrirConfiguracion;
-import modelo.Aula;
+import modelo.*;
 
 import java.awt.*;
 import java.io.File;
@@ -39,8 +36,7 @@ public class AulasController {
     private TableColumn<Aula, String> columnaDescripcion;
     @FXML
     private TableColumn<Aula, String> columnaIp;
-    @FXML
-    private Button botonLimpiar;
+
 
     @FXML
     public void initialize() {
@@ -62,9 +58,6 @@ public class AulasController {
             aulaSeleccionada = newValue;
         });
 
-        botonLimpiar.setOnAction(event ->
-                limpiar()
-        );
     }
 
     private void cargarAulas() {
@@ -106,11 +99,7 @@ public class AulasController {
                 App.setUserData(aulaSeleccionada);
                 App.setRoot("/com/example/inventario_hib/gestionmodulos/aulas/modificarAula", "Modificar aulas");
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Error");
-                alert.setContentText("Debes seleccionar un aula para poder modificarla.");
-                alert.showAndWait();
+                MostrarAlerta.AlertaError("Error", "Error", "Debes seleccionar un aula para poder modificarla.");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -123,32 +112,19 @@ public class AulasController {
                 Alert alertConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
                 alertConfirmation.setTitle("Eliminar aula");
                 alertConfirmation.setHeaderText("¿Estás seguro de que deseas eliminar el aula?");
-                alertConfirmation.setContentText("Se eliminará el aula seleccionada.");
                 alertConfirmation.showAndWait();
                 if (alertConfirmation.getResult() != ButtonType.OK) {
                     return;
                 } else {
                     if (aulaDAO.delete(aulaSeleccionada)) {
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Éxito");
-                        alert.setHeaderText("Aula eliminada.");
-                        alert.setContentText("El aula seleccionada ha sido eliminada correctamente.");
-                        alert.showAndWait();
+                        MostrarAlerta.AlertaExitosa("Eliminación exitosa", "Aula eliminada", "Se ha eliminado el aula correctamente.");
                         cargarAulas();
                     } else {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Error");
-                        alert.setHeaderText("Error al eliminar el aula.");
-                        alert.setContentText("Ha ocurrido un error al intentar eliminar el aula seleccionada.");
-                        alert.showAndWait();
+                        MostrarAlerta.AlertaError("Error", "Error al intentar eliminar el aula", "No se ha poddio eliminar el aula");
                     }
                 }
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Error");
-                alert.setContentText("Debes seleccionar un aula para poder modificarla.");
-                alert.showAndWait();
+                MostrarAlerta.AlertaError("Error", "Error", "Debes seleccionar un aula para poder eliminarla.");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -184,6 +160,7 @@ public class AulasController {
         }
     }
 
+    @FXML
     private void limpiar() {
         txtNumeracion.clear();
         txtDescripcion.clear();

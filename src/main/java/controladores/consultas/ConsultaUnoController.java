@@ -112,7 +112,7 @@ public class ConsultaUnoController {
 
     public void volver(ActionEvent actionEvent) {
         try {
-            App.setRoot("dashboard", "Programa de gestión de inventario");
+            App.setRoot("dashboard", "PROGRAMA DE GESTIÓN DE INVENTARIO");
         } catch (IOException e) {
             e.printStackTrace();
         }

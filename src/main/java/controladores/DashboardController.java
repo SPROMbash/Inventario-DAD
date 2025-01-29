@@ -55,43 +55,4 @@ public class DashboardController {
         }
     }
 
-    public void abirConsulta1(MouseEvent mouseEvent) {
-        try {
-            App.setRoot("/com/example/inventario_hib/consultas/uno", "Marcajes de un Producto entre dos fechas");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void abirConsulta2(MouseEvent mouseEvent) {
-        try {
-            App.setRoot("/com/example/inventario_hib/consultas/dos", "Marcajes de un Aula entre dos fechas");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void abirConsulta3(MouseEvent mouseEvent) {
-        try {
-            App.setRoot("/com/example/inventario_hib/consultas/tres", "Marcajes de un Aula y de un Producto");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void abirConsulta4(MouseEvent mouseEvent) {
-        try {
-            App.setRoot("/com/example/inventario_hib/consultas/cuatro", "Productos sin categoría");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void abirConsulta5(MouseEvent mouseEvent) {
-        try {
-            App.setRoot("/com/example/inventario_hib/consultas/cinco", "Número de productos por categoría");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
