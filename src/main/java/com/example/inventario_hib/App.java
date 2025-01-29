@@ -18,7 +18,7 @@ public class App extends Application {
         stage.setTitle("Programa de gestión de inventario");
         stage.setScene(scene);
         stage.setResizable(false);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/tabla.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/estilos/tabla.css")).toExternalForm());
         stage.show();
     }
 

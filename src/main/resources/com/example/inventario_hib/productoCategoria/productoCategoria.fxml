@@ -152,7 +152,7 @@
         </HBox>
     </children>
    <stylesheets>
-      <URL value="@../../../../styles/estilos.css" />
-      <URL value="@../../../../styles/tabla.css" />
+      <URL value="@../../../../estilos/estilos.css" />
+      <URL value="@../../../../estilos/tabla.css" />
    </stylesheets>
 </AnchorPane>

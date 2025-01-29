@@ -30,6 +30,31 @@ public class DashboardController {
         System.exit(0);
     }
 
+
+    public void mostrarMensajeNoDisponible(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Función no disponible");
+        alert.setHeaderText(null);
+        alert.setContentText("Esta función estará disponible en versiones posteriores.");
+        alert.showAndWait();
+    }
+
+    public void abrirGestionModulos(MouseEvent mouseEvent) {
+        try {
+            App.setRoot("/com/example/inventario_hib/gestionmodulos/gestionModulos", "Gestión de los Módulos.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void abrirConsultasModulos(MouseEvent mouseEvent) {
+        try {
+            App.setRoot("/com/example/inventario_hib/consultas/consultasModulos", "Consultas de Módulos.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void abirConsulta1(MouseEvent mouseEvent) {
         try {
             App.setRoot("/com/example/inventario_hib/consultas/uno", "Marcajes de un Producto entre dos fechas");
@@ -65,30 +90,6 @@ public class DashboardController {
     public void abirConsulta5(MouseEvent mouseEvent) {
         try {
             App.setRoot("/com/example/inventario_hib/consultas/cinco", "Número de productos por categoría");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void mostrarMensajeNoDisponible(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Función no disponible");
-        alert.setHeaderText(null);
-        alert.setContentText("Esta función estará disponible en versiones posteriores.");
-        alert.showAndWait();
-    }
-
-    public void abrirGestionModulos(MouseEvent mouseEvent) {
-        try {
-            App.setRoot("/com/example/inventario_hib/gestionmodulos/gestionModulos", "Gestión de los Módulos.");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void abrirConsultasModulos(MouseEvent mouseEvent) {
-        try {
-            App.setRoot("/com/example/inventario_hib/consultas/consultasModulos", "Consultas de Módulos.");
         } catch (Exception e) {
             e.printStackTrace();
         }

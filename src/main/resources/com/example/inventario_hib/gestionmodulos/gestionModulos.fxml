@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="950.0" style="-fx-background-color: #131d39;" styleClass="pane" stylesheets="@../../../../styles/estilos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.gestionmodulos.GestionModulosController">
+<AnchorPane prefHeight="600.0" prefWidth="950.0" style="-fx-background-color: #131d39;" styleClass="pane" stylesheets="@../../../../estilos/estilos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.gestionmodulos.GestionModulosController">
     <children>
         <Label alignment="CENTER" layoutX="40.0" layoutY="50.0" prefHeight="77.0" prefWidth="1221.0" styleClass="bold" text="GESTIÓN DE LOS DISTINTOS MÓDULOS" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="50.0">
             <font>

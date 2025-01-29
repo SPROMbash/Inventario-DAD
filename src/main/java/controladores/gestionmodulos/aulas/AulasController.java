@@ -10,6 +10,9 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import modelo.AbrirAccesibilidad;
+import modelo.AbrirAyuda;
+import modelo.AbrirConfiguracion;
 import modelo.Aula;
 
 import java.awt.*;
@@ -154,44 +157,15 @@ public class AulasController {
     }
 
     public void abrirAccesibilidad(ActionEvent actionEvent) {
-        try {
-            App.setRoot("/com/example/inventario_hib/opcionesMenu/accesibilidad", "Accesibilidad");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void abrirConfiguracion(ActionEvent actionEvent) {
-        try {
-            App.setRoot("/com/example/inventario_hib/opcionesMenu/configuracion", "Configuración");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        AbrirAccesibilidad.abrir();
     }
 
     public void abrirAyuda(ActionEvent actionEvent) {
-        try {
-            String rutaAyuda = "C:/Users/tecen/Documents/HelpNDoc/Output/chm/AyudaApp.chm";
+        AbrirAyuda.abrir();
+    }
 
-            File archivoAyuda = new File(rutaAyuda);
-
-            if (archivoAyuda.exists()) {
-                Desktop.getDesktop().open(archivoAyuda);
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Archivo de ayuda no encontrado");
-                alert.setContentText("No se pudo encontrar el archivo de ayuda en la ruta especificada:\n" + rutaAyuda);
-                alert.showAndWait();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error al abrir la ayuda");
-            alert.setContentText("Ocurrió un error al intentar abrir el archivo de ayuda. Por favor, inténtelo de nuevo.");
-            alert.showAndWait();
-        }
+    public void abrirConfiguracion(){
+        AbrirConfiguracion.abrir();
     }
 
     public void mostrarMensajeNoDisponible(ActionEvent actionEvent) {

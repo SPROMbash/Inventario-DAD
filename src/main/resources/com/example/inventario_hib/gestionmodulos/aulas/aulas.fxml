@@ -16,8 +16,8 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="950.0" style="-fx-background-color: #131d39;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.gestionmodulos.aulas.AulasController">
    <stylesheets>
-      <URL value="@../../../../../styles/estilos.css" />
-      <URL value="@../../../../../styles/tabla.css" />
+      <URL value="@../../../../../estilos/estilos.css" />
+      <URL value="@../../../../../estilos/tabla.css" />
    </stylesheets>
    <MenuBar layoutY="2.0" styleClass="menu-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <menus>
@@ -52,7 +52,7 @@
          <Font name="Calibri Bold" size="14.0" />
       </font>
    </TextField>
-   <TableView fx:id="tablaDeAulas" layoutX="172.0" layoutY="200.0" prefHeight="230.0" prefWidth="604.0" stylesheets="@../../../../../styles/tabla.css" AnchorPane.leftAnchor="172.0" AnchorPane.rightAnchor="173.5999999999999">
+   <TableView fx:id="tablaDeAulas" layoutX="172.0" layoutY="200.0" prefHeight="230.0" prefWidth="604.0" stylesheets="@../../../../../estilos/tabla.css" AnchorPane.leftAnchor="172.0" AnchorPane.rightAnchor="173.5999999999999">
       <columns>
          <TableColumn fx:id="columnaIdAula" prefWidth="142.40003967285156" text="ID" />
          <TableColumn fx:id="columnaNumeracion" prefWidth="134.39996337890625" text="Numeración" />

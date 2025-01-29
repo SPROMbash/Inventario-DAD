@@ -3,7 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.text.Font?>
 
-<Button fx:id="botonLimpiar" mnemonicParsing="false" onAction="#limpiar" prefHeight="27.0" prefWidth="111.0" style="-fx-background-radius: 20;" styleClass="btn" stylesheets="@../../../../styles/estilos.css" text="Limpiar" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.opcionesMenu.BotonLimpiarController">
+<Button fx:id="botonLimpiar" mnemonicParsing="false" onAction="#limpiar" prefHeight="27.0" prefWidth="111.0" style="-fx-background-radius: 20;" styleClass="btn" stylesheets="@../../../../estilos/estilos.css" text="Limpiar" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.opcionesMenu.BotonLimpiarController">
    <font>
       <Font name="System Bold Italic" size="18.0" />
    </font>

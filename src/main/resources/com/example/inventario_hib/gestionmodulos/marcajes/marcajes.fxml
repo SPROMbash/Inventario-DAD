@@ -88,7 +88,7 @@
             </HBox>
          </children>
       </HBox>
-      <TableView fx:id="tablaDeMarcajes" layoutX="110.0" layoutY="208.0" prefHeight="230.0" prefWidth="750.0" stylesheets="@../../../../../styles/tabla.css">
+      <TableView fx:id="tablaDeMarcajes" layoutX="110.0" layoutY="208.0" prefHeight="230.0" prefWidth="750.0" stylesheets="@../../../../../estilos/tabla.css">
          <columns>
             <TableColumn fx:id="columnaIdMarcaje" prefWidth="142.40003967285156" text="ID" />
             <TableColumn fx:id="columnaIdAula" prefWidth="134.39996337890625" text="ID AULA" />
@@ -116,7 +116,7 @@
       <DatePicker fx:id="FechaFinal" layoutX="301.0" layoutY="498.0" promptText="Fecha Final" />
    </children>
    <stylesheets>
-      <URL value="@../../../../../styles/estilos.css" />
-      <URL value="@../../../../../styles/tabla.css" />
+      <URL value="@../../../../../estilos/estilos.css" />
+      <URL value="@../../../../../estilos/tabla.css" />
    </stylesheets>
 </AnchorPane>

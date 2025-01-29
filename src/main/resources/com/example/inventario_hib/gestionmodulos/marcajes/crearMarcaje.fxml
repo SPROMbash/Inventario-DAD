@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="950.0" style="-fx-background-color: #131d39;" stylesheets="@../../../../../styles/estilos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.gestionmodulos.marcajes.CrearMarcajeController">
+<AnchorPane prefHeight="600.0" prefWidth="950.0" style="-fx-background-color: #131d39;" stylesheets="@../../../../../estilos/estilos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.gestionmodulos.marcajes.CrearMarcajeController">
     <MenuBar layoutY="2.0" styleClass="menu-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <Menu id="opcionAccesibilidad" mnemonicParsing="false" styleClass="menu-item" text="Accesibilidad">
             <MenuItem mnemonicParsing="false" onAction="#abrirAccesibilidad" text="Abrir Accesibilidad..." />

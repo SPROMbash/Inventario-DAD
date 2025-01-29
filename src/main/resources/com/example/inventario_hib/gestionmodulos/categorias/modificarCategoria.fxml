@@ -61,7 +61,7 @@
                 <Font name="System Bold" size="20.0" />
             </font>
         </Label>
-        <Button fx:id="buttonModificar" layoutX="461.0" layoutY="504.0" mnemonicParsing="false" onAction="#modificar" prefHeight="39.0" style="-fx-background-radius: 20;" styleClass="btn-confirmar" stylesheets="@../../../../../styles/estilos.css" text="Modificar categoría">
+        <Button fx:id="buttonModificar" layoutX="461.0" layoutY="504.0" mnemonicParsing="false" onAction="#modificar" prefHeight="39.0" style="-fx-background-radius: 20;" styleClass="btn-confirmar" stylesheets="@../../../../../estilos/estilos.css" text="Modificar categoría">
             <font>
                 <Font name="System Bold Italic" size="18.0" />
             </font>

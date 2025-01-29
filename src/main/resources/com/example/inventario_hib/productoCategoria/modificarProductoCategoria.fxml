@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1300.0" style="-fx-background-color: #653239;" stylesheets="@../../../../styles/tabla.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.productoCategoria.ModificarProductoCategoriaController">
+<AnchorPane prefHeight="800.0" prefWidth="1300.0" style="-fx-background-color: #653239;" stylesheets="@../../../../estilos/tabla.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.productoCategoria.ModificarProductoCategoriaController">
     <children>
         <MenuBar layoutY="2.0" styleClass="menu-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <menus>
@@ -51,7 +51,7 @@
                 <Font name="System Bold" size="20.0" />
             </font>
         </Label>
-        <Button fx:id="buttonModificar" layoutX="416.0" layoutY="683.0" mnemonicParsing="false" onAction="#modificar" prefHeight="39.0" style="-fx-background-radius: 20;" styleClass="btn-confirmar" stylesheets="@../../../../styles/estilos.css" text="Modificar producto">
+        <Button fx:id="buttonModificar" layoutX="416.0" layoutY="683.0" mnemonicParsing="false" onAction="#modificar" prefHeight="39.0" style="-fx-background-radius: 20;" styleClass="btn-confirmar" stylesheets="@../../../../estilos/estilos.css" text="Modificar producto">
             <font>
                 <Font name="System Bold Italic" size="18.0" />
             </font>

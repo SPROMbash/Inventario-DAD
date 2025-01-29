@@ -8,6 +8,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import modelo.AbrirAccesibilidad;
+import modelo.AbrirAyuda;
 import modelo.Producto;
 
 import java.awt.*;
@@ -44,36 +46,11 @@ public class ConsultaCuatroController {
     }
 
     public void abrirAccesibilidad(ActionEvent actionEvent) {
-        try {
-            App.setRoot("com/example/inventario_hib/opcionesMenu/accesibilidad", "Accesibilidad");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        AbrirAccesibilidad.abrir();
     }
 
     public void abrirAyuda(ActionEvent actionEvent) {
-        try {
-            String rutaAyuda = "C:/Users/tecen/Documents/HelpNDoc/Output/chm/AyudaApp.chm";
-
-            File archivoAyuda = new File(rutaAyuda);
-
-            if (archivoAyuda.exists()) {
-                Desktop.getDesktop().open(archivoAyuda);
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Archivo de ayuda no encontrado");
-                alert.setContentText("No se pudo encontrar el archivo de ayuda en la ruta especificada:\n" + rutaAyuda);
-                alert.showAndWait();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error al abrir la ayuda");
-            alert.setContentText("Ocurrió un error al intentar abrir el archivo de ayuda. Por favor, inténtelo de nuevo.");
-            alert.showAndWait();
-        }
+        AbrirAyuda.abrir();
     }
 
     public void volver(ActionEvent actionEvent) {
