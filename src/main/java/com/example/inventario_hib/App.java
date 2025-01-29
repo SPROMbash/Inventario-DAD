@@ -15,11 +15,16 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("dashboard"), 950, 600);
-        stage.setTitle("Programa de gestión de inventario");
+        stage.setTitle("PROGRAMA DE GESTIÓN DE INVENTARIO");
         stage.setScene(scene);
         stage.setResizable(false);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/estilos/tabla.css")).toExternalForm());
         stage.show();
+    }
+
+    private static Parent loadFXML(String fxmlPath) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxmlPath + ".fxml"));
+        return fxmlLoader.load();
     }
 
     public static void setRoot(String fxmlPath, String title) throws IOException {
@@ -27,11 +32,6 @@ public class App extends Application {
         Stage stage = (Stage) scene.getWindow();
         stage.sizeToScene();
         stage.setTitle(title);
-    }
-
-    private static Parent loadFXML(String fxmlPath) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxmlPath + ".fxml"));
-        return fxmlLoader.load();
     }
 
     public static void setUserData(Object objeto) {

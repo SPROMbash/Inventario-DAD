@@ -1,6 +1,9 @@
 package modelo;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+
+import java.util.Optional;
 
 public class MostrarAlerta {
     public static void AlertaError(String title, String header, String message) {
@@ -17,6 +20,13 @@ public class MostrarAlerta {
         alert.setHeaderText(header);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public static Optional<ButtonType> AlertaConfirmacion(String title, String header) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        return alert.showAndWait();
     }
 
     public static void showAlert(String message) {

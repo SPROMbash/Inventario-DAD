@@ -30,22 +30,19 @@ public class ProductoCategoriaController {
     private TextField txtIdProducto;
 
     @FXML
-    private TableView<ProductoCategoria> tablaProductoCategoria;
+    private TableView<ProductoCategoria> tablaDeProductoCategoria;
     @FXML
-    private TableColumn<ProductoCategoria, Long> colId;
+    private TableColumn<ProductoCategoria, Long> columnaId;
     @FXML
-    private TableColumn<ProductoCategoria, Long> colIdCategoria;
+    private TableColumn<ProductoCategoria, Long> columnaIdCategoria;
     @FXML
-    private TableColumn<ProductoCategoria, Long> colIdProducto;
-
-    @FXML
-    private Button buttonLimpiar; // Importamos el botón de limpiar
+    private TableColumn<ProductoCategoria, Long> columnaIdProducto;
 
     @FXML
     public void initialize() {
-        colId.setCellValueFactory(new PropertyValueFactory<>("idProductoCategoria"));
-        colIdCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
-        colIdProducto.setCellValueFactory(new PropertyValueFactory<>("producto"));
+        columnaId.setCellValueFactory(new PropertyValueFactory<>("idProductoCategoria"));
+        columnaIdCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
+        columnaIdProducto.setCellValueFactory(new PropertyValueFactory<>("producto"));
         cargarProductoCategorias();
 
         txtIdCategoria.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -64,33 +61,29 @@ public class ProductoCategoriaController {
             }
         });
 
-        buttonLimpiar.setOnAction(event -> {
-            limpiar();
-        });
-
-        tablaProductoCategoria.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        tablaDeProductoCategoria.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             productoCategoriaSeleccionado = newValue;
         });
     }
 
     private void cargarProductoCategorias() {
         List<ProductoCategoria> productoCategorias = productoCategoriaDAO.getTodos();
-        tablaProductoCategoria.getItems().clear();
-        tablaProductoCategoria.getItems().setAll(productoCategorias);
+        tablaDeProductoCategoria.getItems().clear();
+        tablaDeProductoCategoria.getItems().setAll(productoCategorias);
 
     }
 
     private void filtrarIdCategoria() {
         List<ProductoCategoria> productoCategorias = productoCategoriaDAO.getPorIdCategoria(Long.parseLong(txtIdCategoria.getText()));
-        tablaProductoCategoria.getItems().clear();
-        tablaProductoCategoria.getItems().setAll(productoCategorias);
+        tablaDeProductoCategoria.getItems().clear();
+        tablaDeProductoCategoria.getItems().setAll(productoCategorias);
 
     }
 
     private void filtrarIdProducto() {
         List<ProductoCategoria> productoCategorias = productoCategoriaDAO.getPorIdProducto(Long.parseLong(txtIdProducto.getText()));
-        tablaProductoCategoria.getItems().clear();
-        tablaProductoCategoria.getItems().setAll(productoCategorias);
+        tablaDeProductoCategoria.getItems().clear();
+        tablaDeProductoCategoria.getItems().setAll(productoCategorias);
 
     }
 
@@ -166,7 +159,7 @@ public class ProductoCategoriaController {
 
     private void limpiar() {
         productoCategoriaSeleccionado = null;
-        tablaProductoCategoria.getItems().clear();
+        tablaDeProductoCategoria.getItems().clear();
         txtIdCategoria.clear();
         txtIdProducto.clear();
         cargarProductoCategorias();

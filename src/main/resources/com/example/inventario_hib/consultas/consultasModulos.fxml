@@ -13,107 +13,95 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="950.0" style="-fx-background-color: #131d39;" styleClass="pane" stylesheets="@../../../../estilos/estilos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.consultas.ConsultasModulosController">
-   <children>
-      <Label alignment="CENTER" layoutX="40.0" layoutY="50.0" prefHeight="77.0" prefWidth="1221.0" styleClass="bold" text="CONSULTAS PARA LOS DIFERENTES MÓDULOS" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="50.0">
-         <font>
-            <Font name="Calibri" size="30.0" />
-         </font>
-      </Label>
-      <ImageView fitHeight="93.0" fitWidth="108.0" layoutX="427.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../img/Designer.png" />
-         </image>
-      </ImageView>
-      <MenuBar layoutY="2.0" styleClass="menu-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <menus>
-            <Menu id="opcionAccesibilidad" mnemonicParsing="false" styleClass="menu-item" text="Herramientas">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#abrirAccesibilidad" text="Accesibilidad" />
-                  <MenuItem mnemonicParsing="false" onAction="#abrirConfiguracion" text="Configuración" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Ayuda">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#abrirAyuda" text="Manual de Usuario" />
-                  <MenuItem mnemonicParsing="false" onAction="#mostrarMensajeNoDisponible" text="Acerca de" />
-                  <MenuItem mnemonicParsing="false" onAction="#mostrarMensajeNoDisponible" text="Soporte Técnico" />
-                  <MenuItem mnemonicParsing="false" onAction="#mostrarMensajeNoDisponible" text="Actualizaciones" />
-               </items>
-            </Menu>
-         </menus>
-      </MenuBar>
-      <VBox layoutX="44.0" layoutY="245.0" prefHeight="259.0" prefWidth="862.0">
-         <children>
-            <HBox onMouseClicked="#abirConsulta1" prefHeight="100.0" prefWidth="627.0" styleClass="hbox">
-               <children>
-                  <Label prefHeight="24.0" prefWidth="616.0" text="1 - MARCAJES DE UN PRODUCTO ORDENADO POR FECHA" textFill="WHITE">
-                     <font>
-                        <Font name="Imprint MT Shadow" size="20.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
-            <HBox onMouseClicked="#abirConsulta2" prefHeight="100.0" prefWidth="200.0" styleClass="hbox">
-               <children>
-                  <Label prefHeight="24.0" prefWidth="507.0" text="2 - MARCAJES DE UN AULA ENTRE DOS FECHAS" textFill="WHITE">
-                     <font>
-                        <Font name="Imprint MT Shadow" size="20.0" />
-                     </font>
-                  </Label>
-               </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox onMouseClicked="#abirConsulta3" prefHeight="100.0" prefWidth="200.0" styleClass="hbox">
-               <children>
-                  <Label prefHeight="24.0" prefWidth="478.0" text="3 - MARCAJES DE UN PRODUCTO Y UN AULA" textFill="WHITE">
-                     <font>
-                        <Font name="Imprint MT Shadow" size="20.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Label>
-               </children>
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox onMouseClicked="#abirConsulta4" prefHeight="100.0" prefWidth="200.0" styleClass="hbox">
-               <children>
-                  <Label prefHeight="24.0" prefWidth="345.0" text="4 - PRODUCTOS SIN CATEGORÍA" textFill="WHITE">
-                     <font>
-                        <Font name="Imprint MT Shadow" size="20.0" />
-                     </font>
-                  </Label>
-               </children>
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox onMouseClicked="#abirConsulta5" prefHeight="100.0" prefWidth="200.0" styleClass="hbox">
-               <children>
-                  <Label prefHeight="24.0" prefWidth="617.0" text="5 - CATEGORÍAS CON NÚMERO DE PRODUCTOS EN ELLAS" textFill="WHITE">
-                     <font>
-                        <Font name="Imprint MT Shadow" size="20.0" />
-                     </font>
-                  </Label>
-               </children>
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </HBox>
-         </children>
-      </VBox>
-      <Button layoutX="734.0" layoutY="550.0" mnemonicParsing="false" onAction="#volver" prefHeight="26.0" prefWidth="187.0" text="VOLVER AL MENÚ PRINCIPAL">
-         <font>
-            <Font name="Calibri Bold" size="12.0" />
-         </font>
-      </Button>
-   </children>
+<AnchorPane prefHeight="600.0" prefWidth="950.0" style="-fx-background-color: #131d39;" styleClass="pane"
+            stylesheets="@../../../../estilos/estilos.css" xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.consultas.ConsultasModulosController">
+   <Label alignment="CENTER" layoutX="40.0" layoutY="50.0" prefHeight="77.0" prefWidth="1221.0" styleClass="bold"
+          text="CONSULTAS PARA LOS DIFERENTES MÓDULOS" textAlignment="CENTER" textFill="WHITE"
+          AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="50.0">
+      <font>
+         <Font name="Calibri" size="30.0"/>
+      </font>
+   </Label>
+   <ImageView fitHeight="93.0" fitWidth="108.0" layoutX="427.0" layoutY="128.0" pickOnBounds="true"
+              preserveRatio="true">
+      <Image url="@../../../../img/Designer.png"/>
+   </ImageView>
+   <MenuBar layoutY="2.0" styleClass="menu-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+            AnchorPane.topAnchor="0.0">
+      <Menu id="opcionAccesibilidad" mnemonicParsing="false" styleClass="menu-item" text="Herramientas">
+         <MenuItem mnemonicParsing="false" onAction="#abrirAccesibilidad" text="Accesibilidad"/>
+         <MenuItem mnemonicParsing="false" onAction="#abrirConfiguracion" text="Configuración"/>
+      </Menu>
+      <Menu mnemonicParsing="false" text="Ayuda">
+         <MenuItem mnemonicParsing="false" onAction="#abrirAyuda" text="Manual de Usuario"/>
+         <MenuItem mnemonicParsing="false" onAction="#mostrarMensajeNoDisponible" text="Acerca de"/>
+         <MenuItem mnemonicParsing="false" onAction="#mostrarMensajeNoDisponible" text="Soporte Técnico"/>
+         <MenuItem mnemonicParsing="false" onAction="#mostrarMensajeNoDisponible" text="Actualizaciones"/>
+      </Menu>
+   </MenuBar>
+   <VBox layoutX="44.0" layoutY="245.0" prefHeight="259.0" prefWidth="862.0">
+      <HBox onMouseClicked="#abirConsulta1" prefHeight="100.0" prefWidth="627.0" styleClass="hbox">
+         <Label prefHeight="24.0" prefWidth="616.0" text="1 - MARCAJES DE UN PRODUCTO ORDENADO POR FECHA"
+                textFill="WHITE">
+            <font>
+               <Font name="Imprint MT Shadow" size="20.0"/>
+            </font>
+         </Label>
+      </HBox>
+      <HBox onMouseClicked="#abirConsulta2" prefHeight="100.0" prefWidth="200.0" styleClass="hbox">
+         <opaqueInsets>
+            <Insets/>
+         </opaqueInsets>
+         <VBox.margin>
+            <Insets top="10.0"/>
+         </VBox.margin>
+         <Label prefHeight="24.0" prefWidth="507.0" text="2 - MARCAJES DE UN AULA ENTRE DOS FECHAS"
+                textFill="WHITE">
+            <font>
+               <Font name="Imprint MT Shadow" size="20.0"/>
+            </font>
+         </Label>
+      </HBox>
+      <HBox onMouseClicked="#abirConsulta3" prefHeight="100.0" prefWidth="200.0" styleClass="hbox">
+         <VBox.margin>
+            <Insets top="10.0"/>
+         </VBox.margin>
+         <Label prefHeight="24.0" prefWidth="478.0" text="3 - MARCAJES DE UN PRODUCTO Y UN AULA" textFill="WHITE">
+            <font>
+               <Font name="Imprint MT Shadow" size="20.0"/>
+            </font>
+            <HBox.margin>
+               <Insets/>
+            </HBox.margin>
+         </Label>
+      </HBox>
+      <HBox onMouseClicked="#abirConsulta4" prefHeight="100.0" prefWidth="200.0" styleClass="hbox">
+         <VBox.margin>
+            <Insets top="10.0"/>
+         </VBox.margin>
+         <Label prefHeight="24.0" prefWidth="345.0" text="4 - PRODUCTOS SIN CATEGORÍA" textFill="WHITE">
+            <font>
+               <Font name="Imprint MT Shadow" size="20.0"/>
+            </font>
+         </Label>
+      </HBox>
+      <HBox onMouseClicked="#abirConsulta5" prefHeight="100.0" prefWidth="200.0" styleClass="hbox">
+         <VBox.margin>
+            <Insets top="10.0"/>
+         </VBox.margin>
+         <Label prefHeight="24.0" prefWidth="617.0" text="5 - CATEGORÍAS CON NÚMERO DE PRODUCTOS EN ELLAS"
+                textFill="WHITE">
+            <font>
+               <Font name="Imprint MT Shadow" size="20.0"/>
+            </font>
+         </Label>
+      </HBox>
+   </VBox>
+   <Button layoutX="734.0" layoutY="550.0" mnemonicParsing="false" onAction="#volver" prefHeight="26.0"
+           prefWidth="187.0" text="VOLVER AL MENÚ PRINCIPAL">
+      <font>
+         <Font name="Calibri Bold" size="12.0"/>
+      </font>
+   </Button>
 </AnchorPane>

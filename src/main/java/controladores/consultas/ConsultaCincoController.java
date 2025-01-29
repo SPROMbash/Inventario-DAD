@@ -51,7 +51,7 @@ public class ConsultaCincoController {
 
     public void volver(ActionEvent actionEvent) {
         try {
-            App.setRoot("dashboard", "Programa de gestión de inventario");
+            App.setRoot("/com/example/inventario_hib/consultas/consultasModulos", "CONSULTAS PARA LOS DIFERENTES MÓDULOS");
         } catch (IOException e) {
             e.printStackTrace();
         }

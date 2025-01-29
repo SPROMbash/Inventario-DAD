@@ -15,6 +15,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public class CategoriasController {
     private final CategoriaDAO categoriaDAO = new CategoriaDAO();
@@ -134,14 +135,8 @@ public class CategoriasController {
     public void eliminarCategoria(MouseEvent mouseEvent) {
         try {
             if (categoriaSeleccionada != null) {
-                Alert alertConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
-                alertConfirmation.setTitle("Eliminar categoría");
-                alertConfirmation.setHeaderText("¿Estás seguro de que deseas eliminar la categoría?");
-                alertConfirmation.showAndWait();
-
-                if (alertConfirmation.getResult() != ButtonType.OK) {
-                    return;
-                } else {
+                Optional<ButtonType> result = MostrarAlerta.AlertaConfirmacion("Eliminar Categoría", "¿Estás seguro de que deseas eliminar la categoría?");
+                if (result.isPresent() && result.get() == ButtonType.OK) {
                     if (categoriaDAO.delete(categoriaSeleccionada)) {
                         MostrarAlerta.AlertaExitosa("Eliminación exitosa", "Categoría eliminada", "Se ha eliminado la categoría correctamente.");
                         cargarCategorias();

@@ -16,6 +16,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public class AulasController {
     private final AulaDAO aulaDAO = new AulaDAO();
@@ -109,18 +110,13 @@ public class AulasController {
     public void eliminarAula(MouseEvent mouseEvent) {
         try {
             if (aulaSeleccionada != null) {
-                Alert alertConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
-                alertConfirmation.setTitle("Eliminar aula");
-                alertConfirmation.setHeaderText("¿Estás seguro de que deseas eliminar el aula?");
-                alertConfirmation.showAndWait();
-                if (alertConfirmation.getResult() != ButtonType.OK) {
-                    return;
-                } else {
+                Optional<ButtonType> result = MostrarAlerta.AlertaConfirmacion("Eliminar aula", "¿Estás seguro de que deseas eliminar el aula?");
+                if (result.isPresent() && result.get() == ButtonType.OK) {
                     if (aulaDAO.delete(aulaSeleccionada)) {
                         MostrarAlerta.AlertaExitosa("Eliminación exitosa", "Aula eliminada", "Se ha eliminado el aula correctamente.");
                         cargarAulas();
                     } else {
-                        MostrarAlerta.AlertaError("Error", "Error al intentar eliminar el aula", "No se ha poddio eliminar el aula");
+                        MostrarAlerta.AlertaError("Error", "Error al intentar eliminar el aula", "No se ha podido eliminar el aula");
                     }
                 }
             } else {
@@ -129,7 +125,6 @@ public class AulasController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public void abrirAccesibilidad(ActionEvent actionEvent) {
