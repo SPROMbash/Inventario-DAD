@@ -92,6 +92,6 @@ public class Producto {
 
     @Override
     public String toString() {
-        return "Producto --> " + "idProducto: " + idProducto + " || Descripcion: " + descripcion + " || EAN13: " + EAN13 + " || keyRFID: " + keyRFID;
+        return String.valueOf(idProducto);
     }
 }

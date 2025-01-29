@@ -75,7 +75,7 @@ public class ModificarProductoController {
 
     public void volver(ActionEvent actionEvent) {
         try {
-            App.setRoot("gestionmodulos/productos/productos", "Productos");
+            App.setRoot("/com/example/inventario_hib/gestionmodulos/productos/productos", "Productos");
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -13,3 +13,20 @@
     -fx-scale-x: 1.05; /* Aumento en el eje X */
     -fx-scale-y: 1.05; /* Aumento en el eje Y */
 }
+
+.toggle-button {
+    -fx-background-color: #2a2a2a;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-font-family: "Calibri Bold";
+    -fx-border-color: #4a4a4a;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #4a90e2;
+    -fx-text-fill: white;
+    -fx-border-color: #4a90e2;
+}

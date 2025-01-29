@@ -95,6 +95,6 @@ public class Marcaje {
 
     @Override
     public String toString() {
-        return "Marcaje --> " + "idMarcaje: " + idMarcaje + " || idProducto: " + idProducto + " || idAula: " + idAula + " || tipo: " + tipo + " || Fecha: " + fecha;
+        return "Marcaje " + "idMarcaje: " + idMarcaje + ", idProducto: " + idProducto + ", idAula: " + idAula + ", Tipo de Marcaje: " + tipo + ", Fecha: " + fecha;
     }
 }

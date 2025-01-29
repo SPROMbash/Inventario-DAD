@@ -29,39 +29,41 @@ public class ModificarMarcajeController {
     private Marcaje marcajeSeleccionado;
 
     @FXML
-    private ComboBox<Long> cbIdAulas;
+    private ComboBox<Long> comboBoxIdAulas;
     @FXML
-    private ComboBox<Long> cbIdProductos;
+    private ComboBox<Long> comboBoxIdProductos;
     @FXML
-    private RadioButton rbEntrada;
+    private ToggleButton toggleButtonEntrada;
     @FXML
-    private RadioButton rbSalida;
-    @FXML
-    private DatePicker dateFecha;
+    private ToggleButton toggleButtonSalida;
 
     @FXML
-    private Button buttonLimpiar;
+    private DatePicker FechaMarcaje;
+    @FXML
+    private Button botonLimpiar;
 
     @FXML
     public void initialize() {
+
         marcajeSeleccionado = (Marcaje) App.getUserData();
-
-        cbIdAulas.getItems().setAll(obtenerIdAulas());
-        cbIdProductos.getItems().setAll(obtenerIdProductos());
-
+        comboBoxIdProductos.getItems().setAll(obtenerIdProductos());
+        comboBoxIdAulas.getItems().setAll(obtenerIdAulas());
         rellenarCampos();
+        ToggleGroup tipoMarcajeGroup = new ToggleGroup();
+        toggleButtonEntrada.setToggleGroup(tipoMarcajeGroup);
+        toggleButtonSalida.setToggleGroup(tipoMarcajeGroup);
 
-        buttonLimpiar.setOnAction(event ->
+        botonLimpiar.setOnAction(event ->
                 limpiar()
         );
     }
 
     private void rellenarCampos() {
-        cbIdAulas.setValue(marcajeSeleccionado.getIdAula().getIdAula());
-        cbIdProductos.setValue(marcajeSeleccionado.getIdProducto().getIdProducto());
-        dateFecha.setValue(convertirALocalDate(marcajeSeleccionado.getFecha()));
-        rbEntrada.setSelected(marcajeSeleccionado.isTipo());
-        rbSalida.setSelected(!marcajeSeleccionado.isTipo());
+        comboBoxIdAulas.setValue(marcajeSeleccionado.getIdAula().getIdAula());
+        comboBoxIdProductos.setValue(marcajeSeleccionado.getIdProducto().getIdProducto());
+        FechaMarcaje.setValue(convertirALocalDate(marcajeSeleccionado.getFecha()));
+        toggleButtonEntrada.setSelected(marcajeSeleccionado.isTipo());
+        toggleButtonSalida.setSelected(!marcajeSeleccionado.isTipo());
     }
 
     private List<Long> obtenerIdAulas() {
@@ -117,7 +119,7 @@ public class ModificarMarcajeController {
 
     public void volver(ActionEvent actionEvent) {
         try {
-            App.setRoot("gestionmodulos/marcajes/marcajes", "Marcajes.");
+            App.setRoot("/com/example/inventario_hib/gestionmodulos/marcajes/marcajes", "Marcajes");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -126,10 +128,10 @@ public class ModificarMarcajeController {
     public void modificarMarcaje(ActionEvent actionEvent) {
         if (comprobarCampos() && comprobarCamposModificados()) {
             Marcaje marcaje = new Marcaje();
-            marcaje.setIdAula(new Aula(cbIdAulas.getValue()));
-            marcaje.setIdProducto(new Producto(cbIdProductos.getValue()));
-            marcaje.setFecha(java.sql.Date.valueOf(dateFecha.getValue()));
-            marcaje.setTipo(rbEntrada.isSelected());
+            marcaje.setIdAula(new Aula(comboBoxIdAulas.getValue()));
+            marcaje.setIdProducto(new Producto(comboBoxIdProductos.getValue()));
+            marcaje.setFecha(java.sql.Date.valueOf(FechaMarcaje.getValue()));
+            marcaje.setTipo(toggleButtonEntrada.isSelected());
             if (marcajeDAO.update(marcaje)) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Información");
@@ -149,16 +151,17 @@ public class ModificarMarcajeController {
         }
     }
 
+    @FXML
     private void limpiar() {
-        cbIdAulas.setValue(marcajeSeleccionado.getIdAula().getIdAula());
-        cbIdProductos.setValue(marcajeSeleccionado.getIdProducto().getIdProducto());
-        dateFecha.setValue(convertirALocalDate(marcajeSeleccionado.getFecha()));
-        rbEntrada.setSelected(marcajeSeleccionado.isTipo());
-        rbSalida.setSelected(!marcajeSeleccionado.isTipo());
+        comboBoxIdAulas.setValue(marcajeSeleccionado.getIdAula().getIdAula());
+        comboBoxIdProductos.setValue(marcajeSeleccionado.getIdProducto().getIdProducto());
+        FechaMarcaje.setValue(convertirALocalDate(marcajeSeleccionado.getFecha()));
+        toggleButtonEntrada.setSelected(marcajeSeleccionado.isTipo());
+        toggleButtonSalida.setSelected(!marcajeSeleccionado.isTipo());
     }
 
     private boolean comprobarCampos() {
-        if (cbIdAulas.getValue() == null || cbIdProductos.getValue() == null || dateFecha.getValue() == null || (!rbEntrada.isSelected() && !rbSalida.isSelected())) {
+        if (comboBoxIdAulas.getValue() == null || comboBoxIdProductos.getValue() == null || FechaMarcaje.getValue() == null || (!toggleButtonEntrada.isSelected() && !toggleButtonSalida.isSelected())) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Error - Campos vacíos");
@@ -170,7 +173,7 @@ public class ModificarMarcajeController {
     }
 
     private boolean comprobarCamposModificados() {
-        if (marcajeSeleccionado.getIdAula().getIdAula() == cbIdAulas.getValue() && marcajeSeleccionado.getIdProducto().getIdProducto() == cbIdProductos.getValue() && marcajeSeleccionado.getFecha().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate().equals(dateFecha.getValue()) && ((marcajeSeleccionado.isTipo() && rbEntrada.isSelected()) || (!marcajeSeleccionado.isTipo() && rbSalida.isSelected()))) {
+        if (marcajeSeleccionado.getIdAula().getIdAula() == comboBoxIdAulas.getValue() && marcajeSeleccionado.getIdProducto().getIdProducto() == comboBoxIdProductos.getValue() && marcajeSeleccionado.getFecha().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate().equals(FechaMarcaje.getValue()) && ((marcajeSeleccionado.isTipo() && toggleButtonEntrada.isSelected()) || (!marcajeSeleccionado.isTipo() && toggleButtonSalida.isSelected()))) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Error - Campos no modificados");

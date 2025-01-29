@@ -6,9 +6,7 @@ import DAO.ProductoDAO;
 import com.example.inventario_hib.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.RadioButton;
+import javafx.scene.control.*;
 import modelo.Aula;
 import modelo.Marcaje;
 import modelo.Producto;
@@ -28,14 +26,17 @@ public class CrearMarcajeController {
     @FXML
     private ComboBox<Long> comboBoxIdProductos;
     @FXML
-    private RadioButton radioButtonEntrada;
+    private ToggleButton toggleButtonEntrada;
     @FXML
-    private RadioButton radioButtonSalida;
+    private ToggleButton toggleButtonSalida;
 
     @FXML
     public void initialize() {
         comboBoxIdAulas.getItems().setAll(obtenerIdAulas());
         comboBoxIdProductos.getItems().setAll(obtenerIdProductos());
+        ToggleGroup tipoMarcajeGroup = new ToggleGroup();
+        toggleButtonEntrada.setToggleGroup(tipoMarcajeGroup);
+        toggleButtonSalida.setToggleGroup(tipoMarcajeGroup);
     }
 
     public void abrirAccesibilidad(ActionEvent actionEvent) {
@@ -102,14 +103,14 @@ public class CrearMarcajeController {
             Marcaje marcaje = new Marcaje();
             marcaje.setIdProducto(productoDAO.obtenerPorId(comboBoxIdProductos.getValue()));
             marcaje.setIdAula(aulaDAO.obtenerPorId(comboBoxIdAulas.getValue()));
-            marcaje.setTipo(radioButtonEntrada.isSelected());
+            marcaje.setTipo(toggleButtonEntrada.isSelected());
             if (marcajeDAO.create(marcaje)) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Marcaje Creado");
                 alert.setHeaderText("Marcaje creado correctamente.");
                 alert.setContentText("ID del Aula: " + comboBoxIdAulas.getValue() +
                         "\nID del Producto: " + comboBoxIdProductos.getValue() +
-                        "\nTipo: " + (radioButtonEntrada.isSelected() ? "Entrada" : "Salida"));
+                        "\nTipo: " + (toggleButtonEntrada.isSelected() ? "Entrada" : "Salida"));
                 alert.showAndWait();
                 limpiar();
             } else {
@@ -125,12 +126,12 @@ public class CrearMarcajeController {
     private void limpiar() {
         comboBoxIdProductos.getSelectionModel().clearSelection();
         comboBoxIdAulas.getSelectionModel().clearSelection();
-        radioButtonEntrada.setSelected(false);
-        radioButtonSalida.setSelected(false);
+        toggleButtonEntrada.setSelected(false);
+        toggleButtonSalida.setSelected(false);
     }
 
     private boolean comprobarCampos() {
-        if (comboBoxIdAulas.getSelectionModel().isEmpty() || comboBoxIdProductos.getSelectionModel().isEmpty() || (!radioButtonEntrada.isSelected() && !radioButtonSalida.isSelected())) {
+        if (comboBoxIdAulas.getSelectionModel().isEmpty() || comboBoxIdProductos.getSelectionModel().isEmpty() || (!toggleButtonEntrada.isSelected() && !toggleButtonSalida.isSelected())) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error - Crear Marcaje");
             alert.setHeaderText("Error al crear el marcaje.");

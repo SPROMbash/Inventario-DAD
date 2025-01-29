@@ -74,6 +74,6 @@ public class Aula {
 
     @Override
     public String toString() {
-        return "Aula --> " + "idAula: " + idAula + " || numeracion: " + numeracion + " || descripcion: " + descripcion + " || direccionIp: " + direccionIp;
+        return String.valueOf(idAula);
     }
 }
