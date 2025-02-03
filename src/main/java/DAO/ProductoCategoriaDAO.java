@@ -27,7 +27,6 @@ public class ProductoCategoriaDAO extends GenericDAO<ProductoCategoria>{
             Hibernate.initialize(producto.getCategorias());
             Hibernate.initialize(categoria.getProductos());
 
-            // Actualizamos la lista de categorías del producto
             if (producto.getCategorias() == null) {
                 producto.setCategorias(new ArrayList<>());
             }

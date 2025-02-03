@@ -14,7 +14,7 @@ public class ConsultasModulosController {
 
     public void abirConsulta1(MouseEvent mouseEvent) {
         try {
-            App.setRoot("/com/example/inventario_hib/consultas/uno", "MARCAJES DE UN PRODUCTO ORDENADO POR FECHA");
+            App.setRoot("/com/example/inventario_hib/consultas/primera", "MARCAJES DE UN PRODUCTO ORDENADO POR FECHA");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -22,7 +22,7 @@ public class ConsultasModulosController {
 
     public void abirConsulta2(MouseEvent mouseEvent) {
         try {
-            App.setRoot("/com/example/inventario_hib/consultas/dos", "MARCAJES DE UN AULA ENTRE DOS FECHAS");
+            App.setRoot("/com/example/inventario_hib/consultas/segunda", "MARCAJES DE UN AULA ENTRE DOS FECHAS");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -30,7 +30,7 @@ public class ConsultasModulosController {
 
     public void abirConsulta3(MouseEvent mouseEvent) {
         try {
-            App.setRoot("/com/example/inventario_hib/consultas/tres", "MARCAJES DE UN PRODUCTO Y UN AULA");
+            App.setRoot("/com/example/inventario_hib/consultas/tercera", "MARCAJES DE UN PRODUCTO Y UN AULA");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -38,7 +38,7 @@ public class ConsultasModulosController {
 
     public void abirConsulta4(MouseEvent mouseEvent) {
         try {
-            App.setRoot("/com/example/inventario_hib/consultas/cuatro", "PRODUCTOS SIN CATEGORÍA");
+            App.setRoot("/com/example/inventario_hib/consultas/cuarta", "PRODUCTOS SIN CATEGORÍA");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -46,7 +46,7 @@ public class ConsultasModulosController {
 
     public void abirConsulta5(MouseEvent mouseEvent) {
         try {
-            App.setRoot("/com/example/inventario_hib/consultas/cinco", "CATEGORÍAS CON NÚMERO DE PRODUCTOS EN ELLAS");
+            App.setRoot("/com/example/inventario_hib/consultas/quinta", "CATEGORÍAS CON NÚMERO DE PRODUCTOS EN ELLAS");
         } catch (Exception e) {
             e.printStackTrace();
         }

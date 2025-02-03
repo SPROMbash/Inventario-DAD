@@ -15,7 +15,7 @@ public class MarcajeDAO extends GenericDAO<Marcaje> {
         super(Marcaje.class);
     }
 
-    // Consulta 1
+    // Primera consulta
     public List<Marcaje> obtenerMarcajesDeProductoEntreFechas(Producto producto, LocalDate inicio, LocalDate fin) {
         List<Marcaje> marcajes = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -31,7 +31,7 @@ public class MarcajeDAO extends GenericDAO<Marcaje> {
         return marcajes;
     }
 
-    // Consulta 2
+    // Segunda consulta
     public List<Marcaje> obtenerMarcajesDeAulaEntreFechas(Aula aula, LocalDate inicio, LocalDate fin) {
         List<Marcaje> marcajes = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -47,7 +47,7 @@ public class MarcajeDAO extends GenericDAO<Marcaje> {
         return marcajes;
     }
 
-    // Consulta 3
+    // Tercera Consulta
     public List<Marcaje> obtenerMarcajesAulaYProducto(Aula aula, Producto producto) {
         List<Marcaje> marcajes = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {

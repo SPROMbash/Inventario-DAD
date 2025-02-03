@@ -1,35 +1,27 @@
 package controladores.consultas;
 
-import DAO.AulaDAO;
 import DAO.MarcajeDAO;
 import DAO.ProductoDAO;
 import com.example.inventario_hib.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
 import modelo.*;
 
-import java.awt.*;
-import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ConsultaTresController {
-    private static final AulaDAO aulaDAO = new AulaDAO();
+public class PrimeraConsultaController {
     private static final ProductoDAO productoDAO = new ProductoDAO();
     private static final MarcajeDAO marcajeDAO = new MarcajeDAO();
-
-    private Aula aulaSeleccionada;
     private Producto productoSeleccionado;
 
     @FXML
     private ComboBox<Long> comboBoxIdProducto;
-    @FXML
-    private ComboBox<Long> comboBoxIdAula;
     @FXML
     private TableView<Marcaje> tablaDeMarcajes;
     @FXML
@@ -42,6 +34,10 @@ public class ConsultaTresController {
     private TableColumn<Marcaje, Date> columnaFecha;
     @FXML
     private TableColumn<Marcaje, Boolean> columnaTipo;
+    @FXML
+    private DatePicker FechaInicio;
+    @FXML
+    private DatePicker FechaFinal;
 
     @FXML
     public void initialize() {
@@ -51,31 +47,27 @@ public class ConsultaTresController {
         columnaFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
         columnaTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
 
-        comboBoxIdAula.getItems().setAll(obtenerIdAulas());
         comboBoxIdProducto.getItems().setAll(obtenerIdProductos());
-
-        comboBoxIdAula.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (comboBoxIdAula.getValue() != null) {
-                aulaSeleccionada = aulaDAO.obtenerPorId(comboBoxIdAula.getValue());
-            }
-            cargarDatos();
-        });
 
         comboBoxIdProducto.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (comboBoxIdProducto.getValue() != null) {
                 productoSeleccionado = productoDAO.obtenerPorId(comboBoxIdProducto.getValue());
+                filtrarEntreFechas();
             }
-            cargarDatos();
         });
-    }
 
-    private List<Long> obtenerIdAulas() {
-        List<Aula> aulas = aulaDAO.getTodos();
-        List<Long> idAulas = new ArrayList<>();
-        for (Aula aula : aulas) {
-            idAulas.add(aula.getIdAula());
-        }
-        return idAulas;
+        FechaInicio.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (FechaInicio.getValue() != null && FechaFinal.getValue() != null) {
+                if (comprobarInicioYFin()) {
+                    filtrarEntreFechas();
+                }
+            }
+        });
+
+        FechaFinal.valueProperty().addListener((observable, oldValue, newValue) -> {
+            filtrarEntreFechas();
+        });
+
     }
 
     private List<Long> obtenerIdProductos() {
@@ -85,6 +77,22 @@ public class ConsultaTresController {
             idProductos.add(producto.getIdProducto());
         }
         return idProductos;
+    }
+
+    private boolean comprobarFechas() {
+        if (FechaInicio.getValue() == null || FechaFinal.getValue() == null) {
+            return false;
+        }
+        return true;
+    }
+
+    private void filtrarEntreFechas() {
+        if (comprobarFechas() && comprobarInicioYFin()) {
+            LocalDate inicio = FechaInicio.getValue();
+            LocalDate fin = FechaFinal.getValue();
+            List<Marcaje> marcajes = marcajeDAO.obtenerMarcajesDeProductoEntreFechas(productoSeleccionado, inicio, fin);
+            tablaDeMarcajes.getItems().setAll(marcajes);
+        }
     }
 
     public void abrirAccesibilidad(ActionEvent actionEvent) {
@@ -103,6 +111,18 @@ public class ConsultaTresController {
         }
     }
 
+    private boolean comprobarLista() {
+        if (comboBoxIdProducto.getValue() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en la selección de producto");
+            alert.setContentText("Por favor, selecciona un producto de la lista desplegable.");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+    }
+
     public void mostrarMensajeNoDisponible(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Función no disponible");
@@ -118,14 +138,26 @@ public class ConsultaTresController {
     @FXML
     private void limpiar() {
         comboBoxIdProducto.setValue(null);
-        comboBoxIdAula.setValue(null);
+        FechaInicio.setValue(null);
+        FechaFinal.setValue(null);
         tablaDeMarcajes.getItems().clear();
     }
 
-    private void cargarDatos() {
-        if (aulaSeleccionada != null && productoSeleccionado != null) {
-            List<Marcaje> marcajes = marcajeDAO.obtenerMarcajesAulaYProducto(aulaSeleccionada, productoSeleccionado);
-            tablaDeMarcajes.getItems().setAll(marcajes);
+    private boolean comprobarInicioYFin() {
+        if (!comprobarFechas()) {
+            return false;
         }
+        if (FechaInicio.getValue().isAfter(FechaFinal.getValue())) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error en el rango de fechas");
+            alert.setContentText("La fecha de inicio no puede ser posterior a la fecha final. Por favor, corrige el rango de fechas.");
+            alert.showAndWait();
+            FechaInicio.setValue(null);
+            FechaFinal.setValue(null);
+            return false;
+        }
+        return true;
     }
+
 }

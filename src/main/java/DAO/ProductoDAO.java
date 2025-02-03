@@ -50,7 +50,7 @@ public class ProductoDAO extends GenericDAO<Producto> {
         }
     }
 
-    // Consulta 4
+    // Cuarta Consulta
     public List<Producto> getProductosSinCategorias() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("SELECT p FROM Producto p WHERE p.idProducto NOT IN (SELECT pc.producto.idProducto FROM ProductoCategoria pc)", Producto.class)
@@ -61,7 +61,7 @@ public class ProductoDAO extends GenericDAO<Producto> {
         }
     }
 
-    // Consulta 5
+    // Quinta Consulta
     public List<Object[]> getNumeroProductoPorCategoria() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("SELECT c.nombre, COUNT(p.idProducto) FROM Producto p JOIN p.categorias c GROUP BY c.nombre", Object[].class)

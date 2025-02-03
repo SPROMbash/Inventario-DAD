@@ -6,19 +6,16 @@ import com.example.inventario_hib.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
 import modelo.*;
 
-import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ConsultaDosController {
+public class SegundaConsultaController {
     private static final AulaDAO aulaDAO = new AulaDAO();
     private static final MarcajeDAO marcajeDAO = new MarcajeDAO();
     private Aula aulaSeleccionada;

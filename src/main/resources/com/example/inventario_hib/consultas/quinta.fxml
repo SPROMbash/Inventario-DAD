@@ -13,7 +13,7 @@
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="950.0"
             style="-fx-background-color: #131d39;" xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.consultas.ConsultaCincoController">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.consultas.QuintaConsultaController">
     <stylesheets>
         <URL value="@../../../../estilos/estilos.css"/>
         <URL value="@../../../../estilos/tabla.css"/>

@@ -2,48 +2,40 @@ package controladores.consultas;
 
 import DAO.ProductoDAO;
 import com.example.inventario_hib.App;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import modelo.AbrirAccesibilidad;
 import modelo.AbrirAyuda;
 import modelo.AbrirConfiguracion;
-import modelo.Producto;
 
-import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-public class ConsultaCuatroController {
+public class QuintaConsultaController {
     private static final ProductoDAO productoDAO = new ProductoDAO();
 
     @FXML
-    private TableView<Producto> tablaDeProductos;
+    private TableView<Object[]> tablaDeNumeroDeProductos;
     @FXML
-    private TableColumn<Producto, Long> columnaIdProducto;
+    private TableColumn<Object[], String> columnaCategorias;
     @FXML
-    private TableColumn<Producto, String> columnaDescripcion;
-    @FXML
-    private TableColumn<Producto, String> columnaEAN13;
-    @FXML
-    private TableColumn<Producto, Boolean> columnaKeyRFID;
+    private TableColumn<Object[], Long> columnaNumeroProductos;
 
     @FXML
     public void initialize() {
-        columnaIdProducto.setCellValueFactory(new PropertyValueFactory<>("idProducto"));
-        columnaDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
-        columnaEAN13.setCellValueFactory(new PropertyValueFactory<>("EAN13"));
-        columnaKeyRFID.setCellValueFactory(new PropertyValueFactory<>("keyRFID"));
+        columnaCategorias.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue()[0]));
+        columnaNumeroProductos.setCellValueFactory(cellData -> new SimpleLongProperty((Long) cellData.getValue()[1]).asObject());
         cargarProductos();
     }
 
     private void cargarProductos() {
-        List<Producto> productos = productoDAO.getProductosSinCategorias();
-        tablaDeProductos.getItems().setAll(productos);
+        List<Object[]> productos = productoDAO.getNumeroProductoPorCategoria();
+        tablaDeNumeroDeProductos.getItems().setAll(productos);
     }
 
     public void abrirAccesibilidad(ActionEvent actionEvent) {
@@ -52,14 +44,6 @@ public class ConsultaCuatroController {
 
     public void abrirAyuda(ActionEvent actionEvent) {
         AbrirAyuda.abrir();
-    }
-
-    public void volver(ActionEvent actionEvent) {
-        try {
-            App.setRoot("/com/example/inventario_hib/consultas/consultasModulos", "CONSULTAS PARA LOS DIFERENTES MÓDULOS");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void mostrarMensajeNoDisponible(ActionEvent actionEvent) {
@@ -72,5 +56,13 @@ public class ConsultaCuatroController {
 
     public void abrirConfiguracion(){
         AbrirConfiguracion.abrir();
+    }
+
+    public void volver(ActionEvent actionEvent) {
+        try {
+            App.setRoot("/com/example/inventario_hib/consultas/consultasModulos", "CONSULTAS PARA LOS DIFERENTES MÓDULOS");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
