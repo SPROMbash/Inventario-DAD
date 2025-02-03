@@ -3,21 +3,18 @@ package controladores.productoCategoria;
 import DAO.CategoriaDAO;
 import DAO.ProductoCategoriaDAO;
 import com.example.inventario_hib.App;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import modelo.AbrirAccesibilidad;
-import modelo.AbrirAyuda;
-import modelo.ProductoCategoria;
+import modelo.*;
 
-import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public class ProductoCategoriaController {
     private static final CategoriaDAO categoriaDAO = new CategoriaDAO();
@@ -32,17 +29,21 @@ public class ProductoCategoriaController {
     @FXML
     private TableView<ProductoCategoria> tablaDeProductoCategoria;
     @FXML
-    private TableColumn<ProductoCategoria, Long> columnaId;
+    private TableColumn<ProductoCategoria, Long> columnaIdProductoCategoria;
     @FXML
     private TableColumn<ProductoCategoria, Long> columnaIdCategoria;
     @FXML
     private TableColumn<ProductoCategoria, Long> columnaIdProducto;
+    @FXML
+    private TableColumn<ProductoCategoria, String> descripcionCategoria;
 
     @FXML
     public void initialize() {
-        columnaId.setCellValueFactory(new PropertyValueFactory<>("idProductoCategoria"));
+        columnaIdProductoCategoria.setCellValueFactory(new PropertyValueFactory<>("idProductoCategoria"));
         columnaIdCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
         columnaIdProducto.setCellValueFactory(new PropertyValueFactory<>("producto"));
+        descripcionCategoria.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCategoria().getDescripcion()));
+
         cargarProductoCategorias();
 
         txtIdCategoria.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -98,15 +99,15 @@ public class ProductoCategoriaController {
 
     public void volver(ActionEvent actionEvent) {
         try {
-            App.setRoot("com/example/inventario_hib/gestionmodulos/gestionModulos", "Gestión de los distintos módulos");
+            App.setRoot("/com/example/inventario_hib/gestionmodulos/gestionModulos", "Gestión de los distintos módulos");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void crearProductoCategoria(MouseEvent mouseEvent) {
+    public void anadirProductoCategoria(MouseEvent mouseEvent) {
         try {
-            App.setRoot("gestionmodulos/productoCategoria/crearProductoCategoria", "Crear Producto por Categoría");
+            App.setRoot("/com/example/inventario_hib/gestionmodulos/productoCategoria/crearProductoCategoria", "Crear Producto por Categoría");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -114,49 +115,49 @@ public class ProductoCategoriaController {
 
     public void modificarProductoCategoria(MouseEvent mouseEvent) {
         try {
-            App.setRoot("gestionmodulos/productoCategoria/modificarProductoCategoria", "Modificar Producto por Categoría");
+            App.setRoot("/com/example/inventario_hib/gestionmodulos/productoCategoria/modificarProductoCategoria", "Modificar Producto por Categoría");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    public void abrirConfiguracion(ActionEvent actionEvent) {
+        try {
+            App.setRoot("/com/example/inventario_hib/opcionesMenu/configuracion", "Configuración");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void mostrarMensajeNoDisponible(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Función no disponible");
+        alert.setHeaderText(null);
+        alert.setContentText("Esta función estará disponible en versiones posteriores.");
+        alert.showAndWait();
+    }
+
     public void eliminarProductoCategoria(MouseEvent mouseEvent) {
         try {
             if (productoCategoriaSeleccionado != null) {
-                Alert alertConfirmacion = new Alert(Alert.AlertType.CONFIRMATION);
-                alertConfirmacion.setTitle("Eliminar relación");
-                alertConfirmacion.setHeaderText("¿Está seguro de que desea eliminar la relación seleccionada?");
-                alertConfirmacion.setContentText("Esta acción no se puede deshacer.");
-                if (alertConfirmacion.showAndWait().get() != ButtonType.OK) {
-                    return;
-                } else {
+                Optional<ButtonType> result = MostrarAlerta.AlertaConfirmacion("Eliminar enlace entre Producto y Categoría", "¿Está seguro de que desea eliminar el enlace seleccionado?");
+                if (result.isPresent() && result.get() == ButtonType.OK) {
                     if (productoCategoriaDAO.delete(productoCategoriaSeleccionado)) {
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Éxito");
-                        alert.setHeaderText("Relación eliminada");
-                        alert.setContentText("La relación ha sido eliminada correctamente.");
-                        alert.showAndWait();
+                        MostrarAlerta.AlertaExitosa("Éxito", "Enlace entre Producto y Categoría eliminado", "El enlace ha sido eliminado correctamente.");
                         cargarProductoCategorias();
                     } else {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Error");
-                        alert.setHeaderText("Error al eliminar la relación");
-                        alert.setContentText("Ha ocurrido un error al eliminar la relación.");
-                        alert.showAndWait();
+                        MostrarAlerta.AlertaError("Error", "Error al eliminar el enlace", "No se ha podido eliminar el enlace entre Producto y Categoría.");
                     }
                 }
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Error al eliminar la relación");
-                alert.setContentText("Debes seleccionar una relación para poder eliminarla.");
-                alert.showAndWait();
+                MostrarAlerta.AlertaError("Error", "Error al eliminar el enlace", "Debes seleccionar un enlace entre Producto y Categoría para poder eliminarlo");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    @FXML
     private void limpiar() {
         productoCategoriaSeleccionado = null;
         tablaDeProductoCategoria.getItems().clear();

@@ -22,18 +22,19 @@ public class CrearProductoCategoriaController {
     private final ProductoCategoriaDAO productoCategoriaDAO = new ProductoCategoriaDAO();
 
     @FXML
-    private ComboBox<Long> cbIdCategorias;
+    private ComboBox<Long> comboBoxIdProductos;
+
     @FXML
-    private ComboBox<Long> cbIdProductos;
+    private ComboBox<Long> comboBoxIdCategorias;
 
     @FXML
     public void initialize() {
-        cbIdCategorias.getItems().setAll(obtenerIdCategorias());
-        cbIdProductos.getItems().setAll(obtenerIdProductos(true));
+        comboBoxIdCategorias.getItems().setAll(obtenerIdCategorias());
+        comboBoxIdProductos.getItems().setAll(obtenerIdProductos(true));
 
-        cbIdCategorias.valueProperty().addListener((observable, oldValue, newValue) -> {
+        comboBoxIdCategorias.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                cbIdProductos.getItems().setAll(obtenerIdProductos(false));
+                comboBoxIdProductos.getItems().setAll(obtenerIdProductos(false));
             }
         });
     }
@@ -55,7 +56,7 @@ public class CrearProductoCategoriaController {
                 idProductos.add(producto.getIdProducto());
             }
         } else {
-            List<Producto> productos = productoDAO.getProductosNoEnCategoria(cbIdCategorias.getValue());
+            List<Producto> productos = productoDAO.getProductosNoEnCategoria(comboBoxIdProductos.getValue());
             for (Producto producto : productos) {
                 idProductos.add(producto.getIdProducto());
             }
@@ -73,42 +74,29 @@ public class CrearProductoCategoriaController {
 
     public void volver(ActionEvent actionEvent) {
         try {
-            App.setRoot("gestionmodulos/productoCategoria/productoCategoria", "Producto por Categoría");
+            App.setRoot("/com/example/inventario_hib/gestionmodulos/productoCategoria/productoCategoria", "Producto por Categoría");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void crear(ActionEvent actionEvent) {
+    public void anadirProductoporCategoria(ActionEvent actionEvent) {
         if (comprobarCampos()) {
-            Producto producto = productoDAO.obtenerPorId(cbIdProductos.getValue());
-            Categoria categoria = categoriaDAO.obtenerPorId(cbIdCategorias.getValue());
+            Producto producto = productoDAO.obtenerPorId(comboBoxIdProductos.getValue());
+            Categoria categoria = categoriaDAO.obtenerPorId(comboBoxIdProductos.getValue());
             ProductoCategoria productoCategoria = new ProductoCategoria(producto, categoria);
             if (productoCategoriaDAO.create(productoCategoria)) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Información");
-                alert.setHeaderText("Producto añadido a categoría");
-                alert.setContentText("El producto se ha añadido a la categoría correctamente." +
-                        "Id de categoría: " + cbIdCategorias.getValue() + "\n" +
-                        "Id de producto: " + cbIdProductos.getValue());
-                alert.showAndWait();
+
+                MostrarAlerta.AlertaExitosa("Creación exitosa", "Producto añadido a categoría", "Se ha añadido el producto a la categoría correctamente");
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Error al añadir producto a categoría");
-                alert.setContentText("Ha ocurrido un error al añadir el producto a la categoría.");
-                alert.showAndWait();
+                MostrarAlerta.AlertaError("Error", "Error al intentar añadir el producto a la categoría", "No se ha podido añadir el producto a la categoría");
             }
         }
     }
 
     private boolean comprobarCampos() {
-        if (cbIdCategorias.getValue() == null || cbIdProductos.getValue() == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error al añadir producto a categoría");
-            alert.setContentText("Debes seleccionar una categoría y un producto para poder añadirlo a la categoría.");
-            alert.showAndWait();
+        if (comboBoxIdCategorias.getValue() == null || comboBoxIdProductos.getValue() == null) {
+           MostrarAlerta.AlertaError("Error", "Error", "Debes seleccionar un producto y una categoría para poder añadir el producto a la categoría.");
             return false;
         }
         return true;

@@ -108,44 +108,29 @@ public class ModificarProductoCategoriaController {
 
     public void volver(ActionEvent actionEvent) {
         try {
-            App.setRoot("gestionmodulos/productoCategoria/productoCategoria", "Producto por Categoría");
+            App.setRoot("/com/example/inventario_hib/gestionmodulos/productoCategoria/productoCategoria", "Producto por Categoría");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void modificar(ActionEvent actionEvent) {
+    public void modificarProductoCategoria(ActionEvent actionEvent) {
         if (comprobarCampos()) {
             productoCategoriaSeleccionado = productoCategoriaDAO.getPorIdProductoYIdCategoria(productoSeleccionado.getIdProducto(), categoriaSeleccionada.getIdCategoria());
             if (productoCategoriaSeleccionado != null) {
                 if (productoCategoriaDAO.delete(productoCategoriaSeleccionado)) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Información");
-                    alert.setHeaderText("Relación eliminada");
-                    alert.setContentText("La relación entre el producto con id: " + productoSeleccionado.getIdProducto() + " y la categoría con id: " + categoriaSeleccionada.getIdCategoria() + " ha sido eliminada correctamente.");
-                    alert.showAndWait();
+                    MostrarAlerta.AlertaExitosa("Información", "Enlace eliminado", "El enlace entre el producto con id: " + productoSeleccionado.getIdProducto() + " y la categoría con id: " + categoriaSeleccionada.getIdCategoria() + " ha sido eliminado correctamente.");
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Error");
-                    alert.setContentText("Ha ocurrido un error al intentar eliminar la relación entre el producto con id: " + productoSeleccionado.getIdProducto() + " y la categoría con id: " + categoriaSeleccionada.getIdCategoria() + ".");
-                    alert.showAndWait();}
+                    MostrarAlerta.AlertaError("Error", "Error", "Ha ocurrido un error al intentar eliminar la relación entre el producto con id: " + productoSeleccionado.getIdProducto() + " y la categoría con id: " + categoriaSeleccionada.getIdCategoria() + ".");
+                }
             } else {
                 productoCategoriaSeleccionado = new ProductoCategoria();
                 productoCategoriaSeleccionado.setProducto(productoSeleccionado);
                 productoCategoriaSeleccionado.setCategoria(categoriaSeleccionada);
                 if (productoCategoriaDAO.create(productoCategoriaSeleccionado)) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Información");
-                    alert.setHeaderText("Relación creada");
-                    alert.setContentText("La relación entre el producto con id: " + productoSeleccionado.getIdProducto() + " y la categoría con id: " + categoriaSeleccionada.getIdCategoria() + " ha sido creada correctamente.");
-                    alert.showAndWait();
+                    MostrarAlerta.AlertaExitosa("Información", "Enlace creado", "El enlace entre el producto con id: " + productoSeleccionado.getIdProducto() + " y la categoría con id: " + categoriaSeleccionada.getIdCategoria() + " ha sido creado correctamente.");
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Error");
-                    alert.setContentText("Ha ocurrido un error al intentar crear la relación entre el producto con id: " + productoSeleccionado.getIdProducto() + " y la categoría con id: " + categoriaSeleccionada.getIdCategoria() + ".");
-                    alert.showAndWait();
+                    MostrarAlerta.AlertaError("Error", "Error", "Ha ocurrido un error al intentar crear el enlace entre el producto con id: " + productoSeleccionado.getIdProducto() + " y la categoría con id: " + categoriaSeleccionada.getIdCategoria() + ".");
                 }
             }
         }
@@ -155,11 +140,7 @@ public class ModificarProductoCategoriaController {
         if (cbIdCategorias.getValue() != null && cbIdProductos.getValue() != null) {
             return true;
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error");
-            alert.setContentText("Debes seleccionar una categoría y un producto para poder modificar la relación.");
-            alert.showAndWait();
+           MostrarAlerta.AlertaError("Error", "Error", "Debes seleccionar un producto y una categoría para poder añadir el producto a la categoría.");
             return false;
         }
     }

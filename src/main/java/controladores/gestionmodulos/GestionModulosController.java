@@ -8,8 +8,6 @@ import modelo.AbrirAccesibilidad;
 import modelo.AbrirAyuda;
 import modelo.AbrirConfiguracion;
 
-import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 
 public class GestionModulosController {
@@ -40,7 +38,7 @@ public class GestionModulosController {
 
     public void abrirProductoCategoria(MouseEvent mouseEvent) {
         try {
-            App.setRoot("/com/example/inventario_hib/productoCategoria/productoCategoria", "Producto por Categoría.");
+            App.setRoot("/com/example/inventario_hib/gestionmodulos/productoCategoria/productoCategoria", "Producto por Categoría.");
         } catch (Exception e) {
             e.printStackTrace();
         }
